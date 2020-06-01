@@ -5,7 +5,7 @@ import {Text, View} from "react-native";
 
 class Home extends React.Component {
     render() {
-        return(
+        return (
             <View>
                 <Text>Bel accueil :></Text>
             </View>
