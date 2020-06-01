@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
@@ -26,6 +27,9 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "2.20.1",
     "react-navigation-stack": "^2.5.1",
     "react-navigation-tabs": "^2.8.13"
   },
