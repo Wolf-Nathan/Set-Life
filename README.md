@@ -7,3 +7,7 @@ Lien pour ajouter Eslint la configuration Eslint du projet à VSCode **https://t
 
 Tester la syntaxe du projet `yarn run lint`.
 Fixer les erreurs de syntaxes basiques `yarn run lint --fix`.
+
+## React-Docgen
+Documenter son code selon les normes indiquées ici **https://github.com/reactjs/react-docgen#proptypes** .
+Pour générer la documentation d'un fichier `yarn run react-docgen [path]`
