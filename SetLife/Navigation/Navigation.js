@@ -12,12 +12,14 @@ const HomeStackNavigator = createStackNavigator({
     screen: Login,
     navigationOptions: {
       title: 'Se connecter',
+      headerShown: false,
     },
   },
   Home: {
     screen: Home,
     navigationOptions: {
       title: 'Accueil',
+      headerShown: false,
     },
   },
 });

@@ -1,9 +1,8 @@
 // Components/Login.js
 
 import React from 'react';
-import {Text, View, ImageBackground, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity} from "react-native";
-import backgroundImage from '../assets/images/background-login.png';
-import logo from '../assets/images/react.png';
+import {Text, View, ImageBackground, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, ScrollView} from "react-native";
+import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width: WIDTH} = Dimensions.get('window');
@@ -32,27 +31,27 @@ class Login extends React.Component {
 
     render() {
         return(
-            <ImageBackground source={backgroundImage} style={styles.backgroundContainer}>
+            <View style={styles.ViewContainer}>
                 <View style={styles.logoContainer}>
-                    <Image source={logo} style={styles.logo} />
-                    <Text style={styles.logoText}>7 Life</Text>
+                    <Image source={logoGreen} style={styles.logo} />
+                    <Text style={styles.logoText}>Sign in</Text>
                 </View>
 
                 <View style={styles.formContainer}>
-                    <Icon name={'ios-person'} size={28} color={'rgba(255, 255, 255, 0.7)'} style={styles.inputIcon} />
+                    <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={styles.inputIcon} />
                     <TextInput 
-                        placeholder={'Utilisateur'}
-                        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                        placeholder={'Username'}
+                        placeholderTextColor={'#344644'}
                         underlineColorAndroid='transparent'
                         style={styles.input}
                     />
                 </View>
 
                 <View style={styles.formContainer}>
-                    <Icon name={'ios-lock'} size={28} color={'rgba(255, 255, 255, 0.7)'} style={styles.inputIcon} />
+                    <Icon name={'ios-lock'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={styles.inputIcon} />
                     <TextInput 
-                        placeholder={'Mot de passe'}
-                        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                        placeholder={'Password'}
+                        placeholderTextColor={'#344644'}
                         underlineColorAndroid='transparent'
                         secureTextEntry={this.state.showPassword}
                         style={styles.input}
@@ -63,9 +62,9 @@ class Login extends React.Component {
                 </View>
 
                 <TouchableOpacity style={styles.ctaLogin}>
-                    <Text style={styles.textLogin}>Connexion</Text>
+                    <Text style={styles.textLogin}>Sign in</Text>
                 </TouchableOpacity>
-            </ImageBackground>
+            </View>
         )
     }
 }
@@ -73,27 +72,24 @@ class Login extends React.Component {
 export default Login;
 
 const styles = StyleSheet.create({
-    backgroundContainer: {
+    ViewContainer: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         width: null,
-        height: null
+        height: null,
+        paddingTop: 100
     },
     logoContainer: {
         alignItems: 'center'
     },
     logo: {
-        width: 150,
-        height: 150
+        width: 200,
+        height: 200
     },
     logoText: {
-        fontSize: 25,
-        color: '#FFFFFF',
+        fontSize: 30,
+        color: '#77897F',
         fontWeight: '500',
-        marginTop: 10,
-        opacity: 0.8,
-        textTransform: 'uppercase'
     },
     formContainer: {
         marginTop: 25
@@ -106,12 +102,12 @@ const styles = StyleSheet.create({
     input: {
         width: WIDTH - 55,
         height: 45,
-        borderRadius: 45,
-        fontSize: 16,
+        borderRadius: 10,
+        fontSize: 19,
         paddingLeft: 45,
-        backgroundColor: 'rgba(0, 0, 0, 0.35)',
-        color: 'rgba(255, 255, 255, 0.7)',
-        marginHorizontal: 25
+        marginHorizontal: 25,
+        borderColor: "#1B5044",
+        borderWidth: 2
     },
     ctaTogglePassword: {
         position: 'absolute',
@@ -120,15 +116,15 @@ const styles = StyleSheet.create({
     },
     ctaLogin: {
         width: WIDTH - 55,
-        height: 45,
-        borderRadius: 45,
-        backgroundColor: 'rgba(25, 118, 200, 0.7)',
+        height: 60,
+        borderRadius: 10,
+        backgroundColor: '#1B5044',
         justifyContent: 'center',
-        marginTop: 20
+        marginTop: 50
     },
     textLogin: {
-        color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 18,
+        color: '#fff',
+        fontSize: 30,
         textAlign: 'center'
     }
 })
