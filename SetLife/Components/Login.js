@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#77897F',
         fontWeight: '500',
+        fontFamily: 'Montserrat'
     },
     formContainer: {
         marginTop: 25
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
         paddingLeft: 45,
         marginHorizontal: 25,
         borderColor: "#1B5044",
-        borderWidth: 2
+        borderWidth: 2,
+        fontFamily: 'Montserrat'
     },
     ctaTogglePassword: {
         position: 'absolute',
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
     textLogin: {
         color: '#fff',
         fontSize: 30,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Montserrat'
     }
 })
