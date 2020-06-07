@@ -57,7 +57,7 @@ class Login extends React.Component {
                         style={styles.input}
                     />
                     <TouchableOpacity style={styles.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(255, 255, 255, 0.7)'} size={26} />
+                        <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
                     </TouchableOpacity>
                 </View>
 
