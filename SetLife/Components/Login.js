@@ -29,6 +29,12 @@ class Login extends React.Component {
         }
     }
 
+    signIn() {
+        // Check login infos here
+        this.props.navigation.navigate('Home');
+    }
+
+
     render() {
         return(
             <View style={styles.ViewContainer}>
@@ -61,7 +67,7 @@ class Login extends React.Component {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.ctaLogin}>
+                <TouchableOpacity style={styles.ctaLogin} onPress={() => this.signIn()}>
                     <Text style={styles.textLogin}>Sign in</Text>
                 </TouchableOpacity>
             </View>
