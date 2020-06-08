@@ -3,6 +3,7 @@
 import React from 'react';
 import {View, Text, TextInput, Button, TouchableOpacity, Picker, StyleSheet, Dimensions} from 'react-native';
 import Constants from "expo-constants";
+import DatePicker from 'react-native-datepicker'
 
 const { width: WIDTH} = Dimensions.get('window');
 
@@ -11,16 +12,13 @@ class TaskForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            typeChoice: "date"
+            typeChoice: "date",
+            date: null
         }
     }
 
     onChangeTaskName(text) {
         this.setState({taskName: text});
-    }
-
-    onChangeDate(text) {
-        this.setState({taskDate: text});
     }
 
     typeChoice(text) {
@@ -88,17 +86,35 @@ class TaskForm extends React.Component {
         }
         return (
             <View style={styles.container}>
+                <Text style={styles.title}>New task</Text>
                 <Text style={styles.label}>Name</Text>
                 <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
                 <Text style={styles.label}>Date</Text>
-                <TextInput style={styles.input} value={this.state.taskDate} onChangeText={text => this.onChangeDate(text)}/>
-                <Text style={styles.label}>Type</Text>
+                <DatePicker 
+                    style={styles.input}
+                    date={this.state.date}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    mode="datetime"
+                    customStyles={{
+                        dateIcon: {
+                            display: 'none'                            
+                        },
+                        dateInput: {
+                            borderWidth: 0
+                        },
+                        dateText: {
+                            fontSize: 19,
+                        }
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}} />
+                <Text style={styles.label}>Type {this.state.date}</Text>
                 <View style={styles.choiceContainer}>
                     <TouchableOpacity
                         style={this.state.typeChoice === "date" ? styles.boxSelected : styles.box}
                         onPress={() => this.typeChoice("date")}>
                         <Text style={styles.buttonText}>
-                            Date
+                            Dated
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -124,33 +140,43 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: Constants.statusBarHeight
     },
+    title: {
+        fontFamily: 'Montserrat',
+        color: '#77897F',
+        fontSize: 24,
+        textAlign: 'center',
+    },
     choiceContainer: {
         flexDirection: 'row',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        width: WIDTH-55,
+        borderRadius: 7,
+        overflow: 'hidden'
     },
     box: {
+        height: 40,
+        justifyContent: 'center',
+        flex: 1,
         backgroundColor: "#77897F",
-        borderRadius: 15,
-        padding: 15,
-        width: 150,
-        margin: 5,
         alignSelf: 'center'
     },
     boxSelected: {
+        height: 40,
+        justifyContent: 'center',
+        flex: 1,
         backgroundColor: "#1B5044",
-        borderRadius: 15,
-        padding: 15,
-        width: 150,
-        margin: 5,
         alignSelf: 'center'
     },
     button: {
+        position: 'absolute',
+        bottom: 10,
         backgroundColor: "#1B5044",
         borderRadius: 15,
-        padding: 15,
         width: 150,
+        height: 50,
         margin: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        justifyContent: 'center'
     },
     buttonText: {
         fontFamily: 'Montserrat',
@@ -161,7 +187,7 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: 'Montserrat',
         color: '#77897F',
-        fontSize: 22,
+        fontSize: 18,
         marginLeft: 25,
         marginTop: 5
     },
@@ -170,7 +196,6 @@ const styles = StyleSheet.create({
         height: 45,
         borderRadius: 7,
         fontSize: 19,
-        paddingLeft: 45,
         marginHorizontal: 25,
         borderColor: "#1B5044",
         borderWidth: 2,

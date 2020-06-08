@@ -28,6 +28,7 @@ const TasksStackNavigator = createStackNavigator({
         screen: TaskForm,
         navigationOptions: {
             title: 'New task',
+            headerShown: false,
         },
     }
 });
