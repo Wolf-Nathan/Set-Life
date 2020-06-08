@@ -24,7 +24,7 @@ class Tasks extends React.Component {
         return (
             <View>
                 <Text>Tasks :></Text>
-                <Button title={"Add a task"} onPress={() => this.setState({addTask: !this.state.addTask})}/>
+                <Button title={"New Task"} onPress={() => this.props.navigation.navigate('NewTask')}/>
                 { this.addTask()}
             </View>
         )
