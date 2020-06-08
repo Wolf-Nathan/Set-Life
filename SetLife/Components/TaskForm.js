@@ -1,7 +1,10 @@
 // Components/TaskForm.js
 
 import React from 'react';
-import {View, Text, TextInput, Button, TouchableOpacity, Picker, StyleSheet} from 'react-native';
+import {View, Text, TextInput, Button, TouchableOpacity, Picker, StyleSheet, Dimensions} from 'react-native';
+import Constants from "expo-constants";
+
+const { width: WIDTH} = Dimensions.get('window');
 
 class TaskForm extends React.Component {
 
@@ -13,15 +16,11 @@ class TaskForm extends React.Component {
     }
 
     onChangeTaskName(text) {
-        if (text !== "") {
-            this.setState({taskName: text});
-        }
+        this.setState({taskName: text});
     }
 
     onChangeDate(text) {
-        if (text !== "") {
-            this.setState({taskDate: text});
-        }
+        this.setState({taskDate: text});
     }
 
     typeChoice(text) {
@@ -36,27 +35,37 @@ class TaskForm extends React.Component {
         if (this.state.typeChoice === "recurrent") {
             return (
                 <View>
-                    <Text>Recurrence</Text>
-                    <TouchableOpacity onPress={() => this.recurrenceChoice("hour")}>
-                        <Text style={this.state.recurrenceChoice === "hour" ? styles.boxSelected : styles.box}>
-                            Hour
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.recurrenceChoice("day")}>
-                        <Text style={this.state.recurrenceChoice === "day" ? styles.boxSelected : styles.box}>
-                            Day
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.recurrenceChoice("week")}>
-                        <Text style={this.state.recurrenceChoice === "week" ? styles.boxSelected : styles.box}>
-                            Week
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.recurrenceChoice("month")}>
-                        <Text style={this.state.recurrenceChoice === "month" ? styles.boxSelected : styles.box}>
-                            Month
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.label}>Recurrence</Text>
+                    <View style={styles.choiceContainer}>
+                        <TouchableOpacity
+                            style={this.state.recurrenceChoice === "hour" ? styles.boxSelected : styles.box}
+                            onPress={() => this.recurrenceChoice("hour")}>
+                            <Text style={styles.buttonText}>
+                                Hour
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={this.state.recurrenceChoice === "day" ? styles.boxSelected : styles.box}
+                            onPress={() => this.recurrenceChoice("day")}>
+                            <Text style={styles.buttonText}>
+                                Day
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={this.state.recurrenceChoice === "week" ? styles.boxSelected : styles.box}
+                            onPress={() => this.recurrenceChoice("week")}>
+                            <Text style={styles.buttonText}>
+                                Week
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={this.state.recurrenceChoice === "month" ? styles.boxSelected : styles.box}
+                            onPress={() => this.recurrenceChoice("month")}>
+                            <Text style={styles.buttonText}>
+                                Month
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )
         }
@@ -78,22 +87,28 @@ class TaskForm extends React.Component {
             })*/
         }
         return (
-            <View>
-                <Text>Task name</Text>
-                <TextInput value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
-                <Text>Date</Text>
-                <TextInput value={this.state.taskDate} onChangeText={text => this.onChangeDate(text)}/>
-                <Text>Type</Text>
-                <TouchableOpacity onPress={() => this.typeChoice("date")}>
-                    <Text style={this.state.typeChoice === "date" ? styles.boxSelected : styles.box}>
-                        Date
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.typeChoice("recurrent")}>
-                    <Text style={this.state.typeChoice === "recurrent" ? styles.boxSelected : styles.box}>
-                        Recurrent
-                    </Text>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <Text style={styles.label}>Name</Text>
+                <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
+                <Text style={styles.label}>Date</Text>
+                <TextInput style={styles.input} value={this.state.taskDate} onChangeText={text => this.onChangeDate(text)}/>
+                <Text style={styles.label}>Type</Text>
+                <View style={styles.choiceContainer}>
+                    <TouchableOpacity
+                        style={this.state.typeChoice === "date" ? styles.boxSelected : styles.box}
+                        onPress={() => this.typeChoice("date")}>
+                        <Text style={styles.buttonText}>
+                            Date
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.typeChoice === "recurrent" ? styles.boxSelected : styles.box}
+                        onPress={() => this.typeChoice("recurrent")}>
+                        <Text style={styles.buttonText}>
+                            Recurrent
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 {this.recurrence()}
                 <TouchableOpacity style={styles.button} onPress={() => this.save()}>
                     <Text style={styles.buttonText}>Save</Text>
@@ -104,17 +119,35 @@ class TaskForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#F2F2F2',
+        flex: 1,
+        paddingTop: Constants.statusBarHeight
+    },
+    choiceContainer: {
+        flexDirection: 'row',
+        alignSelf: 'center'
+    },
     box: {
-        color: "#000000"
+        backgroundColor: "#77897F",
+        borderRadius: 15,
+        padding: 15,
+        width: 150,
+        margin: 5,
+        alignSelf: 'center'
     },
     boxSelected: {
-        color: "#0000FF"
+        backgroundColor: "#1B5044",
+        borderRadius: 15,
+        padding: 15,
+        width: 150,
+        margin: 5,
+        alignSelf: 'center'
     },
     button: {
         backgroundColor: "#1B5044",
         borderRadius: 15,
-        padding: 5,
-        paddingLeft: 15,
+        padding: 15,
         width: 150,
         margin: 5,
         alignSelf: 'center'
@@ -122,8 +155,27 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: 'Montserrat',
         fontSize: 18,
-        color: '#F2F2F2'
-    }
+        color: '#F2F2F2',
+        alignSelf: 'center'
+    },
+    label: {
+        fontFamily: 'Montserrat',
+        color: '#77897F',
+        fontSize: 22,
+        marginLeft: 25,
+        marginTop: 5
+    },
+    input: {
+        width: WIDTH - 55,
+        height: 45,
+        borderRadius: 7,
+        fontSize: 19,
+        paddingLeft: 45,
+        marginHorizontal: 25,
+        borderColor: "#1B5044",
+        borderWidth: 2,
+        fontFamily: 'Montserrat'
+    },
 });
 
 export default TaskForm;

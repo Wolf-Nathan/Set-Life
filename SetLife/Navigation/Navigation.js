@@ -47,7 +47,7 @@ const Tab = createBottomTabNavigator({
             navigationOptions: {
                 title: 'Calendar',
                 tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="format-list-bulleted" color={color} size={30} />
+                    <MaterialCommunityIcons name="calendar-month" color={color} size={30} />
                 )
             }
         },
