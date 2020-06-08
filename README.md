@@ -1,4 +1,7 @@
+![illus](https://github.com/Wolf-Nathan/Set-Life/blob/master/SetLife/assets/images/logo_green_500.png)
+
 # Set-Life
+
 ## Commandes de base
 Quand des packages ou des modules sont rajoutés au projet, mettre à jour la branche master `git pull -p`, puis une fois toutes les nouveautés récupérées lancer la commande `yarn install`.
 
