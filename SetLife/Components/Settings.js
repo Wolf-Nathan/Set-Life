@@ -5,34 +5,55 @@ import {Text, View, StyleSheet, Dimensions, TouchableOpacity} from "react-native
 import Constants from 'expo-constants';
 import DatePicker from 'react-native-datepicker';
 import WeekdaySelector from './WeekdaySelector';
+import { connect } from 'react-redux';
 
 const { width: WIDTH} = Dimensions.get('window');
 
 class Settings extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            typeChoice: "date",
-            wakeupWeek: null,
-            wakeupWeekend: null,
-            breakfast: null,
-            lunch: null,
-            dinner: null,
-            workday: {
-                monday: false,
-                tuesday: false,
-                wednesday: false,
-                thursday: false,
-                friday: false,
-                saturday: false,
-                sunday: false
-            },
-            workMorningStart: null,
-            workMorningEnd: null,
-            workAfternoonStart: null,
-            workAfternoonEnd: null,
-        }
+    toggleWakeupWeek = (newValue) => {
+        const toggle = { type: "TOGGLE_WAKEUPWEEK", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleWakeupWeekend = (newValue) => {
+        const toggle = { type: "TOGGLE_WAKEUPWEEKEND", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleBreakfast = (newValue) => {
+        const toggle = { type: "TOGGLE_BREAKFAST", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleLunch = (newValue) => {
+        const toggle = { type: "TOGGLE_LUNCH", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleDinner = (newValue) => {
+        const toggle = { type: "TOGGLE_DINNER", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleWorkMorningStart = (newValue) => {
+        const toggle = { type: "TOGGLE_WORKMORNINGSTART", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleWorkMorningEnd = (newValue) => {
+        const toggle = { type: "TOGGLE_WORKMORNINGEND", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleWorkAfternoonStart = (newValue) => {
+        const toggle = { type: "TOGGLE_WORKAFTERNOONSTART", value: newValue }
+        this.props.dispatch(toggle);
+    }
+
+    toggleWorkAfternoonEnd = (newValue) => {
+        const toggle = { type: "TOGGLE_WORKAFTERNOONEND", value: newValue }
+        this.props.dispatch(toggle);
     }
 
     render() {
@@ -46,7 +67,7 @@ class Settings extends React.Component {
                             <Text style={styles.text}>Week day</Text>
                             <DatePicker 
                                 style={styles.inputTime}
-                                date={this.state.wakeupWeek}
+                                date={this.props.settings.wakeupWeek}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -63,13 +84,13 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(wakeupWeek) => {this.setState({wakeupWeek: wakeupWeek})}} />
+                                onDateChange={(wakeupWeek) => {this.toggleWakeupWeek(wakeupWeek)}} />
                         </View>
                         <View>
                             <Text style={styles.text}>Weekend day</Text>
                             <DatePicker 
                                 style={styles.inputTime}
-                                date={this.state.wakeupWeekend}
+                                date={this.props.settings.wakeupWeekend}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -86,7 +107,7 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(wakeupWeekend) => {this.setState({wakeupWeekend: wakeupWeekend})}} />
+                                onDateChange={(wakeupWeekend) => {this.toggleWakeupWeekend(wakeupWeekend)}} />
                         </View>
                     </View>
                 </View>
@@ -97,7 +118,7 @@ class Settings extends React.Component {
                             <Text style={styles.text}>Breakfast</Text>
                             <DatePicker 
                                 style={styles.inputTime}
-                                date={this.state.breakfast}
+                                date={this.props.settings.breakfast}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -114,13 +135,13 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(breakfast) => {this.setState({breakfast: breakfast})}} />
+                                onDateChange={(breakfast) => {this.toggleBreakfast(breakfast)}} />
                         </View>
                         <View>
                             <Text style={styles.text}>Lunch</Text>
                             <DatePicker 
                                 style={styles.inputTime}
-                                date={this.state.lunch}
+                                date={this.props.settings.lunch}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -137,13 +158,13 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(lunch) => {this.setState({lunch: lunch})}} />
+                                onDateChange={(lunch) => {this.toggleLunch(lunch)}} />
                         </View>
                         <View>
                             <Text style={styles.text}>Dinner</Text>
                             <DatePicker 
                                 style={styles.inputTime}
-                                date={this.state.dinner}
+                                date={this.props.settings.dinner}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -160,7 +181,7 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(dinner) => {this.setState({dinner: dinner})}} />
+                                onDateChange={(dinner) => {this.toggleDinner(dinner)}} />
                         </View>
                     </View>
                 </View>
@@ -173,7 +194,7 @@ class Settings extends React.Component {
                             <View style={styles.rowContainerSub}>
                                 <DatePicker 
                                     style={styles.inputTime}
-                                    date={this.state.workMorningStart}
+                                    date={this.props.settings.workMorningStart}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -190,10 +211,10 @@ class Settings extends React.Component {
                                             color: "#F2F2F2"
                                         }
                                     }}
-                                    onDateChange={(workMorningStart) => {this.setState({workMorningStart: workMorningStart})}} />
+                                    onDateChange={(workMorningStart) => {this.toggleWorkMorningStart(workMorningStart)}} />
                                     <DatePicker 
                                     style={styles.inputTime}
-                                    date={this.state.workMorningEnd}
+                                    date={this.props.settings.workMorningEnd}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -210,7 +231,7 @@ class Settings extends React.Component {
                                             color: "#F2F2F2"
                                         }
                                     }}
-                                    onDateChange={(workMorningEnd) => {this.setState({workMorningEnd: workMorningEnd})}} />
+                                    onDateChange={(workMorningEnd) => {this.toggleWorkMorningEnd(workMorningEnd)}} />
                             </View>
                         </View>
                         <View>
@@ -218,7 +239,7 @@ class Settings extends React.Component {
                             <View style={styles.rowContainerSub}>
                                 <DatePicker 
                                     style={styles.inputTime}
-                                    date={this.state.workAfternoonStart}
+                                    date={this.props.settings.workAfternoonStart}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -235,10 +256,10 @@ class Settings extends React.Component {
                                             color: "#F2F2F2"
                                         }
                                     }}
-                                    onDateChange={(workAfternoonStart) => {this.setState({workAfternoonStart: workAfternoonStart})}} />
+                                    onDateChange={(workAfternoonStart) => {this.toggleWorkAfternoonStart(workAfternoonStart)}} />
                                     <DatePicker 
                                     style={styles.inputTime}
-                                    date={this.state.workAfternoonEnd}
+                                    date={this.props.settings.workAfternoonEnd}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -255,7 +276,7 @@ class Settings extends React.Component {
                                             color: "#F2F2F2"
                                         }
                                     }}
-                                    onDateChange={(workAfternoonEnd) => {this.setState({workAfternoonEnd: workAfternoonEnd})}} />
+                                    onDateChange={(workAfternoonEnd) => {this.toggleWorkAfternoonEnd(workAfternoonEnd)}} />
                             </View>
                         </View>
                     </View>
@@ -278,6 +299,12 @@ class Settings extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        settings: state.settings
+    }
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -348,4 +375,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Settings;
+export default connect(mapStateToProps)(Settings);
