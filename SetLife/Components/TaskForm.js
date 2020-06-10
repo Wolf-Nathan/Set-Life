@@ -3,7 +3,8 @@
 import React from 'react';
 import {View, Text, TextInput, Button, TouchableOpacity, Picker, StyleSheet, Dimensions} from 'react-native';
 import Constants from "expo-constants";
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+import {connect} from 'react-redux';
 
 const { width: WIDTH} = Dimensions.get('window');
 /*
@@ -95,11 +96,24 @@ class TaskForm extends React.Component {
         }
     }
 
+    /*
+     * Make action with the taskReducer to save or update the task
+     * in function of the situation, then return to Tasks View.
+     */
     save(){
-
+        let task = {
+            name: this.state.taskName,
+            date: this.state.date,
+            type: this.state.typeChoice,
+            recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
+        };
+        let action = {type: "ADD_TASK", value: task};
+        this.props.dispatch(action);
+        this.props.navigation.navigate('Tasks');
     }
 
     render() {
+        console.log(this.props);
         const taskId = this.props.taskId;
         if(taskId) {
             /*var task = getTask(taskId);
@@ -162,6 +176,12 @@ class TaskForm extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        taskReducer: state.task
+    }
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -232,4 +252,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TaskForm;
+export default connect(mapStateToProps)(TaskForm);
