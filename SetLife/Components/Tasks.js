@@ -25,7 +25,7 @@ class Tasks extends React.Component {
                         data={this.props.taskReducer.taskList}
                         renderItem={({ item }) => {
                             return(
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskForm')}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskForm', {taskId: item.id})}>
                                     <RowTask item={item} />
                                 </TouchableOpacity>
                             )}

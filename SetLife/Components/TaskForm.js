@@ -14,9 +14,30 @@ class TaskForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            typeChoice: "date",
-            date: null
+        const taskId = this.props.navigation.state.params ? this.props.navigation.state.params.taskId : null;
+        if(taskId) {
+            let task = this.getTask(taskId);
+            if (task) {
+                this.state = {
+                    taskId: taskId,
+                    taskName: task.name,
+                    date: task.date,
+                    typeChoice: task.type,
+                    recurrenceChoice: task.type === "recurrent" ? task.recurrence : null
+                };
+            }
+            else {
+                this.state = {
+                    typeChoice: "date",
+                    date: null
+                }
+            }
+        }
+        else {
+            this.state = {
+                typeChoice: "date",
+                date: null
+            }
         }
     }
 
@@ -101,29 +122,48 @@ class TaskForm extends React.Component {
      * in function of the situation, then return to Tasks View.
      */
     save(){
-        let task = {
-            name: this.state.taskName,
-            date: this.state.date,
-            type: this.state.typeChoice,
-            recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
-        };
-        let action = {type: "ADD_TASK", value: task};
-        this.props.dispatch(action);
+        // If we already have a taskId we edit a task.
+        if (this.state.taskId) {
+            let task = {
+                id: this.state.taskId,
+                name: this.state.taskName,
+                date: this.state.date,
+                type: this.state.typeChoice,
+                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
+            };
+            let action = {type: "UPDATE_TASK", value: task};
+            this.props.dispatch(action);
+        }
+        // If we haven't it's a new task.
+        else {
+            let task = {
+                name: this.state.taskName,
+                date: this.state.date,
+                type: this.state.typeChoice,
+                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
+            };
+            let action = {type: "ADD_TASK", value: task};
+            this.props.dispatch(action);
+        }
         this.props.navigation.navigate('Tasks');
+    }
+
+    /*
+     * Get a task in the list by his id.
+     */
+    getTask(taskId){
+        let selectTask = null;
+        let taskList = this.props.taskReducer.taskList;
+        taskList.forEach(task => {
+            if (task.id === taskId) {
+                selectTask = task;
+            }
+        });
+        return selectTask;
     }
 
     render() {
         console.log(this.props);
-        const taskId = this.props.taskId;
-        if(taskId) {
-            /*var task = getTask(taskId);
-            this.setState({
-                taskName: task.name,
-                taskDate: task.date,
-                typeChoice: task.typeChoice,
-                recurrenceChoice: task.typeChoice === "recurrence" ? task.recurrenceChoice : null
-            })*/
-        }
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>New task</Text>

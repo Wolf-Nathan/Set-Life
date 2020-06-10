@@ -23,7 +23,16 @@ function toggleTaskList(state = initialState, action) {
       return nextState || state;
     // Update a task in the list.
     case 'UPDATE_TASK':
-      const taskListIndex = state.taskList.findIndex((item) => item.id === action.value.id);
+      task = action.value;
+      // eslint-disable-next-line no-case-declarations
+      const taskListIndex = state.taskList.findIndex((item) => item.id === task.id);
+      // eslint-disable-next-line no-case-declarations
+      const nextTaskList = state.taskList;
+      nextTaskList[taskListIndex] = task;
+      nextState = {
+        ...state,
+        taskList: nextTaskList,
+      };
       return nextState || state;
     default:
       return state;
