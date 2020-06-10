@@ -17,6 +17,15 @@ class TaskForm extends React.Component {
         }
     }
 
+    cleanForm(){
+        this.setState({
+            taskName: "",
+            date: "",
+            typeChoice: "date",
+            recurrenceChoice: ""
+        })
+    }
+
     onChangeTaskName(text) {
         this.setState({taskName: text});
     }
@@ -87,6 +96,9 @@ class TaskForm extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>New task</Text>
+                <TouchableOpacity onPress={() => this.cleanForm() }>
+                    <Text>Supprimer les données</Text>
+                </TouchableOpacity>
                 <Text style={styles.label}>Name</Text>
                 <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
                 <Text style={styles.label}>Date</Text>
@@ -108,7 +120,7 @@ class TaskForm extends React.Component {
                         }
                     }}
                     onDateChange={(date) => {this.setState({date: date})}} />
-                <Text style={styles.label}>Type {this.state.date}</Text>
+                <Text style={styles.label}>Type</Text>
                 <View style={styles.choiceContainer}>
                     <TouchableOpacity
                         style={this.state.typeChoice === "date" ? styles.boxSelected : styles.box}
