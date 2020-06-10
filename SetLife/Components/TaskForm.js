@@ -6,7 +6,9 @@ import Constants from "expo-constants";
 import DatePicker from 'react-native-datepicker'
 
 const { width: WIDTH} = Dimensions.get('window');
-
+/*
+ * Component for Task Form.
+ */
 class TaskForm extends React.Component {
 
     constructor(props) {
@@ -17,6 +19,9 @@ class TaskForm extends React.Component {
         }
     }
 
+    /*
+     * Function to make form at default value.
+     */
     cleanForm(){
         this.setState({
             taskName: "",
@@ -26,18 +31,30 @@ class TaskForm extends React.Component {
         })
     }
 
+    /*
+     * Change taskName in the state.
+     */
     onChangeTaskName(text) {
         this.setState({taskName: text});
     }
 
+    /*
+     * Change typeChoice in the state.
+     */
     typeChoice(text) {
         this.setState({typeChoice: text});
     }
 
+    /*
+     * Change recurrenceChoice in the state.
+     */
     recurrenceChoice(text) {
         this.setState({recurrenceChoice: text});
     }
 
+    /*
+     * Return choice of recurrence View if type selected is recurrent.
+     */
     recurrence() {
         if (this.state.typeChoice === "recurrent") {
             return (
