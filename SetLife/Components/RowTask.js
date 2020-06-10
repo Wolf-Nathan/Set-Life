@@ -19,7 +19,7 @@ export default class rowTask extends Component {
                     </TouchableWithoutFeedback>
                 </View>  
                 <Text style={styles.title}>{task.name}</Text>
-                <Text style={styles.timeText}>{task.date} - 08h15</Text>
+                <Text style={styles.timeText}>{task.date}{task.startHour ? " " + task.startHour : ""} - 08h15</Text>
             </View>
         )
     }

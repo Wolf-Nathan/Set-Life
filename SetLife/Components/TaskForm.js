@@ -7,6 +7,7 @@ import DatePicker from 'react-native-datepicker';
 import {connect} from 'react-redux';
 
 const { width: WIDTH} = Dimensions.get('window');
+
 /*
  * Component for Task Form.
  */
@@ -21,22 +22,25 @@ class TaskForm extends React.Component {
                 this.state = {
                     taskId: taskId,
                     taskName: task.name,
-                    date: task.date,
+                    date: task.hourChoice === "fix" ? task.date + " " + task.startHour : task.date,
                     typeChoice: task.type,
-                    recurrenceChoice: task.type === "recurrent" ? task.recurrence : null
+                    recurrenceChoice: task.type === "recurrent" ? task.recurrence : null,
+                    hourChoice: task.hourChoice
                 };
             }
             else {
                 this.state = {
                     typeChoice: "date",
-                    date: null
+                    date: null,
+                    hourChoice: "free"
                 }
             }
         }
         else {
             this.state = {
                 typeChoice: "date",
-                date: null
+                date: null,
+                hourChoice: "free"
             }
         }
     }
@@ -49,7 +53,8 @@ class TaskForm extends React.Component {
             taskName: "",
             date: "",
             typeChoice: "date",
-            recurrenceChoice: ""
+            recurrenceChoice: "",
+            hourChoice: "free"
         })
     }
 
@@ -58,6 +63,13 @@ class TaskForm extends React.Component {
      */
     onChangeTaskName(text) {
         this.setState({taskName: text});
+    }
+
+    /*
+     * Change hourChoice in the state.
+     */
+    hourChoice(text){
+        this.setState({hourChoice: text});
     }
 
     /*
@@ -72,6 +84,58 @@ class TaskForm extends React.Component {
      */
     recurrenceChoice(text) {
         this.setState({recurrenceChoice: text});
+    }
+
+    /*
+     * Return DatePicker view in function of the hourChoice.
+     */
+    dateInput() {
+        if (this.state.hourChoice === "fix") {
+            return (
+                <DatePicker
+                    style={styles.input}
+                    date={this.state.date}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    mode="datetime"
+                    format={"DD/MM/YYYY H:mm"}
+                    customStyles={{
+                        dateIcon: {
+                            display: 'none'
+                        },
+                        dateInput: {
+                            borderWidth: 0
+                        },
+                        dateText: {
+                            fontSize: 19,
+                        }
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}} />
+            )
+        }
+        else {
+            return (
+                <DatePicker
+                    style={styles.input}
+                    date={this.state.date}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    mode="date"
+                    format={"DD/MM/YYYY"}
+                    customStyles={{
+                        dateIcon: {
+                            display: 'none'
+                        },
+                        dateInput: {
+                            borderWidth: 0
+                        },
+                        dateText: {
+                            fontSize: 19,
+                        }
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}} />
+            )
+        }
     }
 
     /*
@@ -127,9 +191,11 @@ class TaskForm extends React.Component {
             let task = {
                 id: this.state.taskId,
                 name: this.state.taskName,
-                date: this.state.date,
+                date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
                 type: this.state.typeChoice,
-                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
+                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
+                hourChoice: this.state.hourChoice,
+                startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null
             };
             let action = {type: "UPDATE_TASK", value: task};
             this.props.dispatch(action);
@@ -138,9 +204,11 @@ class TaskForm extends React.Component {
         else {
             let task = {
                 name: this.state.taskName,
-                date: this.state.date,
+                date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
                 type: this.state.typeChoice,
-                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null
+                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
+                hourChoice: this.state.hourChoice,
+                startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null
             };
             let action = {type: "ADD_TASK", value: task};
             this.props.dispatch(action);
@@ -172,25 +240,25 @@ class TaskForm extends React.Component {
                 </TouchableOpacity>
                 <Text style={styles.label}>Name</Text>
                 <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
+                <Text style={styles.label}>Hour</Text>
+                <View style={styles.choiceContainer}>
+                    <TouchableOpacity
+                        style={this.state.hourChoice === "free" ? styles.boxSelected : styles.box}
+                        onPress={() => this.hourChoice("free")}>
+                        <Text style={styles.buttonText}>
+                            Free
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.hourChoice === "fix" ? styles.boxSelected : styles.box}
+                        onPress={() => this.hourChoice("fix")}>
+                        <Text style={styles.buttonText}>
+                            Fix
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <Text style={styles.label}>Date</Text>
-                <DatePicker 
-                    style={styles.input}
-                    date={this.state.date}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    mode="datetime"
-                    customStyles={{
-                        dateIcon: {
-                            display: 'none'                            
-                        },
-                        dateInput: {
-                            borderWidth: 0
-                        },
-                        dateText: {
-                            fontSize: 19,
-                        }
-                    }}
-                    onDateChange={(date) => {this.setState({date: date})}} />
+                { this.dateInput()}
                 <Text style={styles.label}>Type</Text>
                 <View style={styles.choiceContainer}>
                     <TouchableOpacity
