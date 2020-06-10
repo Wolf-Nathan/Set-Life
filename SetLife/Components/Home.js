@@ -8,7 +8,8 @@ import RowTask from './RowTask';
 class Home extends React.Component {
     render() {
         const date = new Date().toDateString();
-        const listDayTasks = ["task1", "task2"];
+        const taskExample = { name: "Meal", date: "07h45", type: "recurrent", recurrence: "day" };
+        const listDayTasks = [taskExample, taskExample];
         //TODO get from reducers day tasks.
 
         return (

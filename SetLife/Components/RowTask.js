@@ -9,6 +9,7 @@ export default class rowTask extends Component {
 
     render() {
         //TODO get infos of task from props and display it.
+        const task = this.props.item;
 
         return (
             <View style={styles.row}>
@@ -17,8 +18,8 @@ export default class rowTask extends Component {
                         <MaterialCommunityIcons name="dots-vertical" color={'#F2F2F2'} size={30} />
                     </TouchableWithoutFeedback>
                 </View>  
-                <Text style={styles.title}>Meal</Text>
-                <Text style={styles.timeText}>07h45 - 08h15</Text>
+                <Text style={styles.title}>{task.name}</Text>
+                <Text style={styles.timeText}>{task.date} - 08h15</Text>
             </View>
         )
     }
