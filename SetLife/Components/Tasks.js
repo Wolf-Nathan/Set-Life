@@ -44,7 +44,7 @@ class Tasks extends React.Component {
     render() {
         return (
             <View>
-                <Text>Tasks :></Text>
+                <Text>Your tasks</Text>
                 { this.taskList() }
                 <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('TaskForm')}>
                     <Text style={styles.buttonText}>New Task</Text>

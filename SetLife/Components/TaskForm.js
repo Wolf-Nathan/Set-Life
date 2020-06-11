@@ -25,14 +25,18 @@ class TaskForm extends React.Component {
                     date: task.hourChoice === "fix" ? task.date + " " + task.startHour : task.date,
                     typeChoice: task.type,
                     recurrenceChoice: task.type === "recurrent" ? task.recurrence : null,
-                    hourChoice: task.hourChoice
+                    hourChoice: task.hourChoice,
+                    importance: task.importance,
+                    duration: task.duration
                 };
             }
             else {
                 this.state = {
                     typeChoice: "date",
                     date: null,
-                    hourChoice: "free"
+                    hourChoice: "free",
+                    importance: 3,
+                    duration: "01:00"
                 }
             }
         }
@@ -40,7 +44,9 @@ class TaskForm extends React.Component {
             this.state = {
                 typeChoice: "date",
                 date: null,
-                hourChoice: "free"
+                hourChoice: "free",
+                importance: 3,
+                duration: "01:00"
             }
         }
     }
@@ -54,12 +60,15 @@ class TaskForm extends React.Component {
             date: "",
             typeChoice: "date",
             recurrenceChoice: "",
-            hourChoice: "free"
+            hourChoice: "free",
+            importance: 3,
+            duration: "01:00"
         })
     }
 
     /*
      * Change taskName in the state.
+     * @String text
      */
     onChangeTaskName(text) {
         this.setState({taskName: text});
@@ -67,6 +76,7 @@ class TaskForm extends React.Component {
 
     /*
      * Change hourChoice in the state.
+     * @String text
      */
     hourChoice(text){
         this.setState({hourChoice: text});
@@ -74,6 +84,7 @@ class TaskForm extends React.Component {
 
     /*
      * Change typeChoice in the state.
+     * @String text
      */
     typeChoice(text) {
         this.setState({typeChoice: text});
@@ -81,9 +92,18 @@ class TaskForm extends React.Component {
 
     /*
      * Change recurrenceChoice in the state.
+     * @String text
      */
     recurrenceChoice(text) {
         this.setState({recurrenceChoice: text});
+    }
+
+    /*
+     * Change importance in the state.
+     * @integer importance
+     */
+    importanceChoice(importance) {
+        this.setState({importance: importance});
     }
 
     /*
@@ -180,6 +200,78 @@ class TaskForm extends React.Component {
             )
         }
     }
+    /*
+     * Add a 0 before a string if he has one character to make it Hour format.
+     * @int value
+     */
+    convertTimer(value) {
+        let string = value.toString();
+        if (string.length === 1) {
+            return "0" + string;
+        }
+        return value;
+    }
+
+    /*
+     * Get data from the state to the task.
+     * @return Object task
+     */
+    dataToTask() {
+        let task = {
+            name: this.state.taskName,
+            date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
+            type: this.state.typeChoice,
+            recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
+            hourChoice: this.state.hourChoice,
+            startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null,
+            importance: this.state.importance,
+            duration: this.state.duration,
+            endHour: null
+        };
+        // Caclculate endHour if the hour is fix.
+        if (task.hourChoice === "fix") {
+            let startHour = task.startHour.substr(0,2);
+            let durationHour = task.duration.substr(0, 2);
+            let startMinute = task.startHour.substr(3);
+            let durationMinute = task.duration.substr(3);
+            if ( startMinute === "00") {
+                let endHour = (parseInt(startHour) + parseInt(durationHour));
+                // If endHour is over 23, the task is over the next day.
+                if( endHour > 23 ) {
+                    endHour = endHour - 24;
+                }
+                endHour = this.convertTimer(endHour);
+                task.endHour = endHour + ":" + durationMinute;
+            }
+            else if ( durationMinute === "00" ) {
+                let endHour = (parseInt(startHour) + parseInt(durationHour));
+                // If endHour is over 23, the task is over the next day.
+                if ( endHour > 23 ) {
+                    endHour = endHour - 24;
+                }
+                endHour = this.convertTimer(endHour);
+                task.endHour = endHour + ":" + startMinute;
+            }
+            else {
+                let minute = (parseInt(startMinute) + parseInt(durationMinute));
+                let bonusHour = 0;
+                // If minute is over 60 we have an additional hour to the endHour.
+                if ( minute > 60) {
+                    minute = minute - 60;
+                    bonusHour = 1;
+                }
+                let endHour = (parseInt(startHour) + parseInt(durationHour)) + bonusHour;
+                // If endHour is over 23, the task is over the next day.
+                if ( endHour > 23 ) {
+                    endHour = endHour - 24;
+                }
+                minute = this.convertTimer(minute);
+                endHour = this.convertTimer(endHour);
+                task.endHour = endHour + ":" + minute;
+            }
+        }
+        return task;
+    }
 
     /*
      * Make action with the taskReducer to save or update the task
@@ -188,28 +280,14 @@ class TaskForm extends React.Component {
     save(){
         // If we already have a taskId we edit a task.
         if (this.state.taskId) {
-            let task = {
-                id: this.state.taskId,
-                name: this.state.taskName,
-                date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
-                type: this.state.typeChoice,
-                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
-                hourChoice: this.state.hourChoice,
-                startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null
-            };
+            let task = this.dataToTask();
+            task.id = this.state.taskId;
             let action = {type: "UPDATE_TASK", value: task};
             this.props.dispatch(action);
         }
         // If we haven't it's a new task.
         else {
-            let task = {
-                name: this.state.taskName,
-                date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
-                type: this.state.typeChoice,
-                recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
-                hourChoice: this.state.hourChoice,
-                startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null
-            };
+            let task = this.dataToTask();
             let action = {type: "ADD_TASK", value: task};
             this.props.dispatch(action);
         }
@@ -277,6 +355,65 @@ class TaskForm extends React.Component {
                     </TouchableOpacity>
                 </View>
                 {this.recurrence()}
+                <Text style={styles.label}>Duration</Text>
+                <DatePicker
+                    style={styles.input}
+                    date={this.state.duration}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    mode="time"
+                    format={"HH:mm"}
+                    customStyles={{
+                        dateIcon: {
+                            display: 'none'
+                        },
+                        dateInput: {
+                            borderWidth: 0
+                        },
+                        dateText: {
+                            fontSize: 19,
+                        }
+                    }}
+                    value={this.state.duration}
+                    onDateChange={(date) => {this.setState({duration: date})}} />
+                <Text style={styles.label}>Importance</Text>
+                <View style={styles.choiceContainer}>
+                    <TouchableOpacity
+                        style={this.state.importance === 1 ? styles.boxSelected : styles.box}
+                        onPress={() => this.importanceChoice(1)}>
+                        <Text style={styles.buttonText}>
+                            Very low
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.importance === 2 ? styles.boxSelected : styles.box}
+                        onPress={() => this.importanceChoice(2)}>
+                        <Text style={styles.buttonText}>
+                            Low
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.importance === 3 ? styles.boxSelected : styles.box}
+                        onPress={() => this.importanceChoice(3)}>
+                        <Text style={styles.buttonText}>
+                            Neutral
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.importance === 4 ? styles.boxSelected : styles.box}
+                        onPress={() => this.importanceChoice(4)}>
+                        <Text style={styles.buttonText}>
+                            High
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={this.state.importance === 5 ? styles.boxSelected : styles.box}
+                        onPress={() => this.importanceChoice(5)}>
+                        <Text style={styles.buttonText}>
+                            Very high
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={styles.button} onPress={() => this.save()}>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
