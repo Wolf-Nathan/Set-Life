@@ -67,6 +67,15 @@ class TaskForm extends React.Component {
     }
 
     /*
+     * Delete the task from the application data.
+     */
+    deleteTask() {
+        let action = {type: "DELETE_TASK", value: this.getTask(this.state.taskId)};
+        this.props.dispatch(action);
+        this.props.navigation.navigate("Tasks");
+    }
+
+    /*
      * Change taskName in the state.
      * @String text
      */
@@ -228,7 +237,7 @@ class TaskForm extends React.Component {
             duration: this.state.duration,
             endHour: null
         };
-        // Caclculate endHour if the hour is fix.
+        // Calculate endHour if the hour is fix.
         if (task.hourChoice === "fix") {
             let startHour = task.startHour.substr(0,2);
             let durationHour = task.duration.substr(0, 2);
@@ -314,8 +323,14 @@ class TaskForm extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.title}>New task</Text>
                 <TouchableOpacity onPress={() => this.cleanForm() }>
-                    <Text>Supprimer les données</Text>
+                    <Text>Clean the form</Text>
                 </TouchableOpacity>
+                {this.state.taskId ?
+                    <TouchableOpacity onPress={() => this.deleteTask()}>
+                        <Text>Delete task</Text>
+                    </TouchableOpacity>
+                    : null
+                }
                 <Text style={styles.label}>Name</Text>
                 <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
                 <Text style={styles.label}>Hour</Text>
