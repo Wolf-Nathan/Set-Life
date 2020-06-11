@@ -4,13 +4,21 @@ import React from 'react'
 import {Text, View, StyleSheet, FlatList} from "react-native";
 import Constants from 'expo-constants';
 import RowTask from './RowTask';
+import {connect} from "react-redux";
 
 class Home extends React.Component {
     render() {
         const date = new Date().toDateString();
-        const taskExample = { name: "Meal", date: "07h45", type: "recurrent", recurrence: "day" };
+        const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };
         const listDayTasks = [taskExample, taskExample];
-        //TODO get from reducers day tasks.
+        var today = new Date();
+        today = today.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0, 10);
+        this.props.taskReducer.taskList.forEach(task => {
+            if (task.date === today) {
+                listDayTasks.push(task);
+            }
+        });
+        taskExample.date = today;
 
         return (
             <View style={styles.container}>
@@ -40,6 +48,12 @@ class Home extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        taskReducer: state.task
+    }
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -82,4 +96,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Home;
+export default connect(mapStateToProps)(Home);

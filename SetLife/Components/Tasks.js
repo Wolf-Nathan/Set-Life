@@ -7,13 +7,6 @@ import RowTask from "./RowTask";
 
 class Tasks extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            addTask: false
-        };
-    }
-
     /*
      * Return the list of tasks or a message if there is no task.
      */
