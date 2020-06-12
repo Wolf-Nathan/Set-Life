@@ -15,7 +15,7 @@ class TaskForm extends React.Component {
 
     constructor(props) {
         super(props);
-        const taskId = this.props.navigation.state.params ? this.props.navigation.state.params.taskId : null;
+        const taskId = this.props.route.params ? this.props.route.params.taskId : null;
         if(taskId) {
             let task = this.getTask(taskId);
             if (task) {
