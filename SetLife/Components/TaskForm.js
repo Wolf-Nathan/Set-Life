@@ -119,7 +119,13 @@ class TaskForm extends React.Component {
      * Return DatePicker view in function of the hourChoice.
      */
     dateInput() {
+        let now = new Date();
+        let nowDate = now.getDate().toString().padStart(2,'0') +"/"+
+                    (now.getMonth() +1 ).toString().padStart(2,'0') +"/"+ 
+                    now.getFullYear();
+        let nowHours = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0')
         if (this.state.hourChoice === "fix") {
+            this.state.date= nowDate +" "+ nowHours;
             return (
                 <DatePicker
                     style={styles.input}
@@ -143,6 +149,7 @@ class TaskForm extends React.Component {
             )
         }
         else {
+            this.state.date= nowDate;
             return (
                 <DatePicker
                     style={styles.input}
