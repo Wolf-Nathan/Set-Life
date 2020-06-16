@@ -10,7 +10,7 @@ import Opening from '../Components/Opening';
 import Login from '../Components/Login';
 import Register from '../Components/Register';
 import Home from '../Components/Home';
-import Calendar from '../Components/CustomCalendar';
+import Calendar from '../Components/CalendarComponent';
 import Tasks from '../Components/Tasks';
 import Settings from '../Components/Settings';
 import TaskForm from "../Components/TaskForm";
