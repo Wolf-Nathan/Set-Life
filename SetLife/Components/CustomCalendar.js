@@ -1,4 +1,4 @@
-// Components/CalendarComponent.js
+// Components/CustomCalendar.js
 
 import React from 'react'
 import { Text, View, StyleSheet, FlatList } from "react-native";
@@ -7,7 +7,7 @@ import Constants from 'expo-constants';
 import RowTask from './RowTask';
 import {connect} from "react-redux";
 
-class CalendarComponent extends React.Component {
+class CustomCalendar extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -227,4 +227,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps)(CalendarComponent);
+export default connect(mapStateToProps)(CustomCalendar);
