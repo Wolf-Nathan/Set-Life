@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Text, View, StyleSheet, FlatList } from "react-native";
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda, LocaleConfig } from 'react-native-calendars';
 import Constants from 'expo-constants';
 import RowTask from './RowTask';
 import {connect} from "react-redux";
@@ -131,6 +131,16 @@ class CalendarComponent extends React.Component {
             }
         });
         taskExample.date = today;
+
+        // Set language calendar
+        LocaleConfig.locales['fr'] = {
+            monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+            dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+            today: 'Aujourd\'hui'
+        };
+        LocaleConfig.defaultLocale = 'fr';
 
         return (
             <View style={styles.container}>
