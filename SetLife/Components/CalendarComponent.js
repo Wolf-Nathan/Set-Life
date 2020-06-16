@@ -142,9 +142,26 @@ class CalendarComponent extends React.Component {
         };
         LocaleConfig.defaultLocale = 'fr';
 
+        // Mark multiple dates
+        // Exemple: vacantion, workout
+        const vacation = {key:'vacation', color: 'red', selectedDotColor: 'yellow'};
+        const workout = {key:'workout', color: 'blue', selectedDotColor: 'yellow'};
+
         return (
             <View style={styles.container}>
-                <Calendar style={styles.calendar} />
+                <Calendar 
+                    style={styles.calendar} 
+                    markedDates={{
+                        '2020-06-11': {startingDay: true, color: 'red', endingDay: true},
+
+                        '2020-06-16': {startingDay: true, color: 'green', textColor: 'white'},
+                        '2020-06-17': {color: 'green', textColor: 'white', marked: true, dotColor: 'yellow'},
+                        '2020-06-18': {selected: true, endingDay: true, color: 'green', textColor: 'white'},
+
+                        '2020-06-25': {startingDay: true, color: 'red', endingDay: true}
+                    }}
+                    markingType={'period'}
+                />
                 {
                     listDayTasks.length ?
                         <View>
