@@ -1,9 +1,10 @@
-// Components/Calendar.js
+// Components/CalendarComponent.js
 
 import React from 'react'
-import {Text, View} from "react-native";
+import { Text, View } from "react-native";
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
-class Calendar extends React.Component {
+class CalendarComponent extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -117,10 +118,12 @@ class Calendar extends React.Component {
     render() {
         return (
             <View>
-                <Text>Calendar :></Text>
+                <Calendar
+
+                />
             </View>
         )
     }
 }
 
-export default Calendar;
+export default CalendarComponent;
