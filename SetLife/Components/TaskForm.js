@@ -2,11 +2,10 @@
 
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Dimensions} from 'react-native';
-import Constants from "expo-constants";
 import DatePicker from 'react-native-datepicker';
 import {connect} from 'react-redux';
 
-const { width: WIDTH} = Dimensions.get('window');
+import { stylesTaskForm } from '../assets/style/stylesheet';
 
 /*
  * Component for Task Form.
@@ -128,7 +127,7 @@ class TaskForm extends React.Component {
         if (this.state.hourChoice === "fix") {
             return (
                 <DatePicker
-                    style={styles.input}
+                    style={stylesTaskForm.input}
                     date={this.state.date}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
@@ -151,7 +150,7 @@ class TaskForm extends React.Component {
         else {
             return (
                 <DatePicker
-                    style={styles.input}
+                    style={stylesTaskForm.input}
                     date={this.state.date}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
@@ -180,33 +179,33 @@ class TaskForm extends React.Component {
         if (this.state.typeChoice === "recurrent") {
             return (
                 <View>
-                    <Text style={styles.label}>Recurrence</Text>
-                    <View style={styles.choiceContainer}>
+                    <Text style={stylesTaskForm.label}>Recurrence</Text>
+                    <View style={stylesTaskForm.choiceContainer}>
                         <TouchableOpacity
-                            style={this.state.recurrenceChoice === "hour" ? styles.boxSelected : styles.box}
+                            style={this.state.recurrenceChoice === "hour" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.recurrenceChoice("hour")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Hour
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.recurrenceChoice === "day" ? styles.boxSelected : styles.box}
+                            style={this.state.recurrenceChoice === "day" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.recurrenceChoice("day")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Day
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.recurrenceChoice === "week" ? styles.boxSelected : styles.box}
+                            style={this.state.recurrenceChoice === "week" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.recurrenceChoice("week")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Week
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.recurrenceChoice === "month" ? styles.boxSelected : styles.box}
+                            style={this.state.recurrenceChoice === "month" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.recurrenceChoice("month")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Month
                             </Text>
                         </TouchableOpacity>
@@ -325,51 +324,51 @@ class TaskForm extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={stylesTaskForm.container}>
                 <ScrollView>
-                    <Text style={styles.title}>New task</Text>
-                    <Text style={styles.label}>Name</Text>
-                    <TextInput style={styles.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
-                    <Text style={styles.label}>Hour</Text>
-                    <View style={styles.choiceContainer}>
+                    <Text style={stylesTaskForm.title}>New task</Text>
+                    <Text style={stylesTaskForm.label}>Name</Text>
+                    <TextInput style={stylesTaskForm.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
+                    <Text style={stylesTaskForm.label}>Hour</Text>
+                    <View style={stylesTaskForm.choiceContainer}>
                         <TouchableOpacity
-                            style={this.state.hourChoice === "free" ? styles.boxSelected : styles.box}
+                            style={this.state.hourChoice === "free" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.hourChoice("free")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Free
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.hourChoice === "fix" ? styles.boxSelected : styles.box}
+                            style={this.state.hourChoice === "fix" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.hourChoice("fix")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Fix
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.label}>Date</Text>
+                    <Text style={stylesTaskForm.label}>Date</Text>
                     { this.dateInput()}
-                    <Text style={styles.label}>Type</Text>
-                    <View style={styles.choiceContainer}>
+                    <Text style={stylesTaskForm.label}>Type</Text>
+                    <View style={stylesTaskForm.choiceContainer}>
                         <TouchableOpacity
-                            style={this.state.typeChoice === "date" ? styles.boxSelected : styles.box}
+                            style={this.state.typeChoice === "date" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.typeChoice("date")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Dated
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.typeChoice === "recurrent" ? styles.boxSelected : styles.box}
+                            style={this.state.typeChoice === "recurrent" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.typeChoice("recurrent")}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Recurrent
                             </Text>
                         </TouchableOpacity>
                     </View>
                     {this.recurrence()}
-                    <Text style={styles.label}>Duration</Text>
+                    <Text style={stylesTaskForm.label}>Duration</Text>
                     <DatePicker
-                        style={styles.input}
+                        style={stylesTaskForm.input}
                         date={this.state.duration}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
@@ -388,55 +387,55 @@ class TaskForm extends React.Component {
                         }}
                         value={this.state.duration}
                         onDateChange={(date) => {this.setState({duration: date})}} />
-                    <Text style={styles.label}>Importance</Text>
-                    <View style={styles.choiceContainer}>
+                    <Text style={stylesTaskForm.label}>Importance</Text>
+                    <View style={stylesTaskForm.choiceContainer}>
                         <TouchableOpacity
-                            style={this.state.importance === 1 ? styles.boxSelected : styles.box}
+                            style={this.state.importance === 1 ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.importanceChoice(1)}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Very low
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.importance === 2 ? styles.boxSelected : styles.box}
+                            style={this.state.importance === 2 ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.importanceChoice(2)}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Low
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.importance === 3 ? styles.boxSelected : styles.box}
+                            style={this.state.importance === 3 ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.importanceChoice(3)}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Neutral
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.importance === 4 ? styles.boxSelected : styles.box}
+                            style={this.state.importance === 4 ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.importanceChoice(4)}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 High
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.importance === 5 ? styles.boxSelected : styles.box}
+                            style={this.state.importance === 5 ? stylesTaskForm.boxSelected : stylesTaskForm.box}
                             onPress={() => this.importanceChoice(5)}>
-                            <Text style={styles.buttonText}>
+                            <Text style={stylesTaskForm.buttonText}>
                                 Very high
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <View style={styles.buttonLine}>
-                    <TouchableOpacity style={styles.button} onPress={() => this.save()}>
-                        <Text style={styles.buttonText}>Save</Text>
+                <View style={stylesTaskForm.buttonLine}>
+                    <TouchableOpacity style={stylesTaskForm.button} onPress={() => this.save()}>
+                        <Text style={stylesTaskForm.buttonText}>Save</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.cleanForm() }>
-                        <Text style={styles.buttonText}>Clean</Text>
+                    <TouchableOpacity style={stylesTaskForm.button} onPress={() => this.cleanForm() }>
+                        <Text style={stylesTaskForm.buttonText}>Clean</Text>
                     </TouchableOpacity>
                     {this.state.taskId ?
-                        <TouchableOpacity style={styles.button} onPress={() => this.deleteTask()}>
-                            <Text style={styles.buttonText}>Delete</Text>
+                        <TouchableOpacity style={stylesTaskForm.button} onPress={() => this.deleteTask()}>
+                            <Text style={stylesTaskForm.buttonText}>Delete</Text>
                         </TouchableOpacity>
                         : null
                     }
@@ -451,75 +450,5 @@ const mapStateToProps = state => {
         taskReducer: state.task
     }
 };
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#F2F2F2',
-        flex: 1,
-        paddingTop: Constants.statusBarHeight+10
-    },
-    title: {
-        fontFamily: 'Montserrat',
-        color: '#77897F',
-        fontSize: 24,
-        textAlign: 'center',
-    },
-    choiceContainer: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        width: WIDTH-55,
-        borderRadius: 7,
-        overflow: 'hidden'
-    },
-    box: {
-        height: 50,
-        justifyContent: 'center',
-        flex: 1,
-        backgroundColor: "#77897F"
-    },
-    boxSelected: {
-        height: 50,
-        justifyContent: 'center',
-        flex: 1,
-        backgroundColor: "#1B5044"
-    },
-    buttonLine: {
-        flexDirection: 'row',
-        position: 'absolute',
-        bottom: 10,
-        alignSelf: 'center'
-    },
-    button: {
-        backgroundColor: "#1B5044",
-        borderRadius: 15,
-        width: 100,
-        height: 50,
-        margin: 5,
-        justifyContent: 'center'
-    },
-    buttonText: {
-        fontFamily: 'Montserrat',
-        fontSize: 18,
-        color: '#F2F2F2',
-        textAlign: 'center'
-    },
-    label: {
-        fontFamily: 'Montserrat',
-        color: '#77897F',
-        fontSize: 18,
-        marginLeft: 25,
-        marginTop: 5
-    },
-    input: {
-        width: WIDTH - 55,
-        height: 45,
-        borderRadius: 7,
-        fontSize: 19,
-        marginHorizontal: 25,
-        borderColor: "#1B5044",
-        borderWidth: 2,
-        fontFamily: 'Montserrat'
-    },
-});
 
 export default connect(mapStateToProps)(TaskForm);

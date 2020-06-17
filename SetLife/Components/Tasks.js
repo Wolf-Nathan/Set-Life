@@ -1,9 +1,11 @@
 // Components/Tasks.js
 
 import React from 'react'
-import {Text, View, Button, TouchableOpacity, StyleSheet, FlatList} from "react-native";
+import {Text, View, TouchableOpacity, FlatList} from "react-native";
 import {connect} from 'react-redux';
 import RowTask from "./RowTask";
+
+import { stylesTasks } from '../assets/style/stylesheet';
 
 class Tasks extends React.Component {
 
@@ -39,8 +41,8 @@ class Tasks extends React.Component {
             <View>
                 <Text>Your tasks</Text>
                 { this.taskList() }
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('TaskForm')}>
-                    <Text style={styles.buttonText}>New Task</Text>
+                <TouchableOpacity style={stylesTasks.button} onPress={() => this.props.navigation.navigate('TaskForm')}>
+                    <Text style={stylesTasks.buttonText}>New Task</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -52,22 +54,5 @@ const mapStateToProps = state => {
         taskReducer: state.task
     }
 };
-
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "#1B5044",
-        borderRadius: 15,
-        padding: 15,
-        width: 150,
-        margin: 5,
-        alignSelf: 'center'
-    },
-    buttonText: {
-        fontFamily: 'Montserrat',
-        fontSize: 18,
-        color: '#F2F2F2',
-        alignSelf: 'center'
-    }
-});
 
 export default connect(mapStateToProps)(Tasks);

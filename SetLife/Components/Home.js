@@ -1,10 +1,11 @@
 // Components/Home.js
 
 import React from 'react'
-import {Text, View, StyleSheet, FlatList} from "react-native";
-import Constants from 'expo-constants';
+import { Text, View, FlatList } from "react-native";
 import RowTask from './RowTask';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+
+import { stylesHome } from '../assets/style/stylesheet';
 
 class Home extends React.Component {
     render() {
@@ -21,13 +22,13 @@ class Home extends React.Component {
         taskExample.date = today;
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.helloText}>Hello Gringo</Text>
-                <Text style={styles.dateText}>{date}</Text>
+            <View style={stylesHome.container}>
+                <Text style={stylesHome.helloText}>Hello Gringo</Text>
+                <Text style={stylesHome.dateText}>{date}</Text>
                 {
                     listDayTasks.length ?
                         <View>
-                            <Text style={styles.dayProgramText}>Your day program</Text>
+                            <Text style={stylesHome.dayProgramText}>Your day program</Text>
                             <FlatList
                                 data={listDayTasks}
                                 renderItem={({ item }) => {
@@ -39,9 +40,9 @@ class Home extends React.Component {
                                 />
                         </View>
                     :
-                        <View style={styles.dayOffContainer}>
-                            <Text style={styles.freeDayText}>You are free today :D</Text>
-                            <Text style={styles.freeDayLabel}>See you tomorrow !</Text>
+                        <View style={stylesHome.dayOffContainer}>
+                            <Text style={stylesHome.freeDayText}>You are free today :D</Text>
+                            <Text style={stylesHome.freeDayLabel}>See you tomorrow !</Text>
                         </View>
                 }
             </View>
@@ -55,45 +56,5 @@ const mapStateToProps = state => {
     }
 };
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#F2F2F2',
-        flex: 1,
-        paddingTop: Constants.statusBarHeight
-    },
-    helloText: {
-        fontFamily: 'Montserrat',
-        color: '#344644',
-        fontSize: 30,
-        textAlign: 'center'
-    },
-    dateText: {
-        fontFamily: 'Montserrat',
-        color: '#77897F',
-        fontSize: 24,
-        textAlign: 'center'
-    },
-    dayProgramText: {
-        fontFamily: 'Montserrat',
-        color: '#77897F',
-        fontSize: 22,
-        marginLeft: 10
-    },
-    dayOffContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    freeDayText: {
-        fontFamily: 'Montserrat',
-        color: '#1B5044',
-        fontSize: 26,
-    },
-    freeDayLabel: {
-        fontFamily: 'Montserrat',
-        color: '#344644',
-        fontSize: 24,
-    }
-});
 
 export default connect(mapStateToProps)(Home);

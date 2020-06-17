@@ -1,57 +1,27 @@
-import React, {Component} from 'react';
-import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
-import { Dimensions } from 'react-native';
+// Components/RowTask.js
+
+import React from 'react';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const { width } = Dimensions.get('window');
+import { stylesRowTask } from '../assets/style/stylesheet';
 
-export default class rowTask extends Component {
+export default class RowTask extends React.Component {
 
     render() {
         //TODO get infos of task from props and display it.
         const task = this.props.item;
 
         return (
-            <View style={styles.row}>
-                <View style={styles.opt_btn}>
+            <View style={stylesRowTask.row}>
+                <View style={stylesRowTask.opt_btn}>
                     <TouchableWithoutFeedback>
                         <MaterialCommunityIcons name="dots-vertical" color={'#F2F2F2'} size={30} />
                     </TouchableWithoutFeedback>
                 </View>  
-                <Text style={styles.title}>{task.name}</Text>
-                <Text style={styles.timeText}>{task.date}{task.startHour ? " " + task.startHour : ""}{task.endHour ? " - " + task.endHour : ""}</Text>
+                <Text style={stylesRowTask.title}>{task.name}</Text>
+                <Text style={stylesRowTask.timeText}>{task.date}{task.startHour ? " " + task.startHour : ""}{task.endHour ? " - " + task.endHour : ""}</Text>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    row: {
-        backgroundColor: '#1B5044',
-        borderRadius: 15,
-        padding: 5,
-        paddingLeft: 15,
-        width: width-20,
-        margin: 5,
-        alignSelf: 'center'
-        
-    },
-    title: {
-        fontFamily: 'Montserrat',
-        fontSize: 18,
-        color: '#F2F2F2'
-    },
-    timeText: {
-        fontFamily: 'Montserrat',
-        fontSize: 13,
-        color: '#F2F2F2'
-    },
-    opt_btn: {
-        zIndex: 1,
-        padding: 5,
-        margin: 5,
-        position: 'absolute',
-        right: -5,
-        top: 3,
-    }
-});

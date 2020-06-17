@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
+import { View, ActivityIndicator, Image } from 'react-native';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store/configureStore';
 import Navigation from "./Navigation/Navigation";
 import * as Font from 'expo-font';
 import logoGreen from './assets/images/logo_green_500.png';
+
+import {stylesApp} from './assets/style/stylesheet';
 
 export default class App extends Component {
 
@@ -32,24 +34,11 @@ export default class App extends Component {
       );
     } else {
       return (
-        <View style={styles.loadingContainer}>
-          <Image source={logoGreen} style={styles.logo} />
+        <View style={stylesApp.loadingContainer}>
+          <Image source={logoGreen} style={stylesApp.logo} />
           <ActivityIndicator size="large" color="#1B5044" />
         </View>
       )
     }
   }
 }
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 200,
-    height: 200
-  }
-});
