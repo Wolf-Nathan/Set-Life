@@ -16,6 +16,12 @@ class TaskForm extends React.Component {
     constructor(props) {
         super(props);
         const taskId = this.props.route.params ? this.props.route.params.taskId : null;
+        let now = new Date();
+        let nowDate = now.getDate().toString().padStart(2,'0') +"/"+
+            (now.getMonth() +1 ).toString().padStart(2,'0') +"/"+
+            now.getFullYear();
+        let nowHours = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
+        let dateDefault = nowDate + ":" + nowHours;
         if(taskId) {
             let task = this.getTask(taskId);
             if (task) {
@@ -33,7 +39,7 @@ class TaskForm extends React.Component {
             else {
                 this.state = {
                     typeChoice: "date",
-                    date: null,
+                    date: dateDefault,
                     hourChoice: "free",
                     importance: 3,
                     duration: "01:00"
@@ -43,7 +49,7 @@ class TaskForm extends React.Component {
         else {
             this.state = {
                 typeChoice: "date",
-                date: null,
+                date: dateDefault,
                 hourChoice: "free",
                 importance: 3,
                 duration: "01:00"
@@ -119,13 +125,7 @@ class TaskForm extends React.Component {
      * Return DatePicker view in function of the hourChoice.
      */
     dateInput() {
-        let now = new Date();
-        let nowDate = now.getDate().toString().padStart(2,'0') +"/"+
-                    (now.getMonth() +1 ).toString().padStart(2,'0') +"/"+ 
-                    now.getFullYear();
-        let nowHours = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0')
         if (this.state.hourChoice === "fix") {
-            this.state.date= nowDate +" "+ nowHours;
             return (
                 <DatePicker
                     style={styles.input}
@@ -149,7 +149,6 @@ class TaskForm extends React.Component {
             )
         }
         else {
-            this.state.date= nowDate;
             return (
                 <DatePicker
                     style={styles.input}
@@ -235,7 +234,7 @@ class TaskForm extends React.Component {
     dataToTask() {
         let task = {
             name: this.state.taskName,
-            date: this.state.hourChoice === "fix" ? this.state.date.substr(0, 10) : this.state.date,
+            date: this.state.date.substr(0, 10),
             type: this.state.typeChoice,
             recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
             hourChoice: this.state.hourChoice,
