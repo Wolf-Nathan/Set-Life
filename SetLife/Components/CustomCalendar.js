@@ -161,6 +161,8 @@ class CustomCalendar extends React.Component {
                         '2020-06-25': {startingDay: true, color: 'red', endingDay: true}
                     }}
                     markingType={'period'}
+                    showWeekNumbers={true}
+                    onDayPress={(day) => {console.log('selected day :', day.dateString)}}
                 />
                 {
                     listDayTasks.length ?
