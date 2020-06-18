@@ -4,7 +4,7 @@ import React from 'react'
 import { Text, View, FlatList } from "react-native";
 import RowTask from './RowTask';
 import { connect } from "react-redux";
-
+import getRSS from "../RSS/getRSS";
 import { stylesHome } from '../assets/style/stylesheet';
 
 class Home extends React.Component {
@@ -20,6 +20,8 @@ class Home extends React.Component {
             }
         });
         taskExample.date = today;
+
+        getRSS();
 
         return (
             <View style={stylesHome.container}>
