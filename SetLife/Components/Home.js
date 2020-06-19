@@ -5,6 +5,7 @@ import { Text, View, FlatList } from "react-native";
 import RowTask from './RowTask';
 import { connect } from "react-redux";
 import { stylesHome } from '../assets/style/stylesheet';
+import RowNews from "./RowNews";
 
 let limitOne = 1;
 
@@ -16,7 +17,6 @@ class Home extends React.Component {
     }
 
     async loadRss() {
-
         let dataNews = await this.props.rssReducer.rss.catch(() => false);
         console.log(dataNews);
         this.setState({dataNews: dataNews});
@@ -29,7 +29,18 @@ class Home extends React.Component {
         }
         if (this.state.dataNews) {
            return(
-               <Text>{this.state.dataNews.title}</Text>
+               <View>
+                   <FlatList
+                        data={this.state.dataNews.items}
+                        renderItem={({item}) => {
+                            return(
+                                <RowNews item={item} />
+                            )
+                        }}
+                        keyExtractor={(item, index)=> index}
+                   />
+               </View>
+                // <Text>{this.state.dataNews.title}</Text>
            )
         }
     }
