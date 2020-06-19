@@ -4,23 +4,41 @@ import React from 'react'
 import { Text, View, FlatList } from "react-native";
 import RowTask from './RowTask';
 import { connect } from "react-redux";
-import getRSS from "../RSS/getRSS";
 import { stylesHome } from '../assets/style/stylesheet';
+
+let limitOne = 1;
 
 class Home extends React.Component {
 
     constructor (props) {
         super(props);
-        let rss = getRSS();
-        this.state = {
-            rss : rss
-        };
+        this.state = {};
+    }
+
+    async loadRss() {
+
+        let dataNews = await this.props.rssReducer.rss.catch(() => false);
+        console.log(dataNews);
+        this.setState({dataNews: dataNews});
+    }
+
+    showNews() {
+        if (limitOne === 1) {
+            this.loadRss();
+            limitOne++;
+        }
+        if (this.state.dataNews) {
+           return(
+               <Text>{this.state.dataNews.title}</Text>
+           )
+        }
     }
 
     render() {
         const date = new Date().toDateString();
         const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };
         const listDayTasks = [taskExample, taskExample];
+        let i = 0;
         var today = new Date();
         today = today.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0, 10);
         this.props.taskReducer.taskList.forEach(task => {
@@ -29,6 +47,8 @@ class Home extends React.Component {
             }
         });
         taskExample.date = today;
+        console.log(this.props);
+        //this.loadRss();
 
         return (
             <View style={stylesHome.container}>
@@ -56,8 +76,7 @@ class Home extends React.Component {
                 }
                 <View>
                     <Text style={stylesHome.dayProgramText}>News</Text>
-                    <Text>{this.state.rss.title}</Text>
-                    <Text>Fuck</Text>
+                    { this.showNews() }
                 </View>
             </View>
         )
@@ -66,7 +85,8 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        taskReducer: state.task
+        taskReducer: state.task,
+        rssReducer: state.rss
     }
 };
 
