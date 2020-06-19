@@ -9,11 +9,12 @@ import { stylesRowTask } from '../assets/style/stylesheet';
 export default class RowNews extends React.Component {
 
     render() {
-        //TODO get infos of news from props and display it.
         const news = this.props.item;
+        // Get date of news.
         const date = new Date(news.published);
-        console.log(date);
+        // Collect day in app format.
         const day = date.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0, 10);
+        // Collect hour in app format.
         const hour = date.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(11, 6);
 
         return (

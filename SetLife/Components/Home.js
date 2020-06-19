@@ -16,12 +16,18 @@ class Home extends React.Component {
         this.state = {};
     }
 
+    /*
+     * Function to collect data from the Promise get by the Reducer.
+     */
     async loadRss() {
         let dataNews = await this.props.rssReducer.rss.catch(() => false);
         console.log(dataNews);
         this.setState({dataNews: dataNews});
     }
 
+    /*
+     * Show the list of News if theyre load.
+     */
     showNews() {
         if (limitOne === 1) {
             this.loadRss();
@@ -40,7 +46,6 @@ class Home extends React.Component {
                         keyExtractor={(item, index)=> index}
                    />
                </View>
-                // <Text>{this.state.dataNews.title}</Text>
            )
         }
     }
@@ -58,8 +63,6 @@ class Home extends React.Component {
             }
         });
         taskExample.date = today;
-        console.log(this.props);
-        //this.loadRss();
 
         return (
             <View style={stylesHome.container}>
