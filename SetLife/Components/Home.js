@@ -8,6 +8,15 @@ import getRSS from "../RSS/getRSS";
 import { stylesHome } from '../assets/style/stylesheet';
 
 class Home extends React.Component {
+
+    constructor (props) {
+        super(props);
+        let rss = getRSS();
+        this.state = {
+            rss : rss
+        };
+    }
+
     render() {
         const date = new Date().toDateString();
         const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };
@@ -20,8 +29,6 @@ class Home extends React.Component {
             }
         });
         taskExample.date = today;
-
-        getRSS();
 
         return (
             <View style={stylesHome.container}>
@@ -47,6 +54,11 @@ class Home extends React.Component {
                             <Text style={stylesHome.freeDayLabel}>See you tomorrow !</Text>
                         </View>
                 }
+                <View>
+                    <Text style={stylesHome.dayProgramText}>News</Text>
+                    <Text>{this.state.rss.title}</Text>
+                    <Text>Fuck</Text>
+                </View>
             </View>
         )
     }
