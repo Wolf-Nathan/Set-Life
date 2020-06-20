@@ -1,9 +1,8 @@
 const INITIAL_STATE = {
   wakeupWeek: null,
   wakeupWeekend: null,
-  breakfast: null,
-  lunch: null,
-  dinner: null,
+  bedtimeWeek: null,
+  bedtimeWeekend: null,
   workday: {
     monday: false,
     tuesday: false,
@@ -34,22 +33,16 @@ export default function SettingsReducer(state = INITIAL_STATE, action) {
         wakeupWeekend: action.value,
       };
       return nextState;
-    case 'TOGGLE_BREAKFAST':
+    case 'TOGGLE_BEDTIMEWEEK':
       nextState = {
         ...state,
-        breakfast: action.value,
+        bedtimeWeek: action.value,
       };
       return nextState;
-    case 'TOGGLE_LUNCH':
+    case 'TOGGLE_BEDTIMEWEEKEND':
       nextState = {
         ...state,
-        lunch: action.value,
-      };
-      return nextState;
-    case 'TOGGLE_DINNER':
-      nextState = {
-        ...state,
-        dinner: action.value,
+        bedtimeWeekend: action.value,
       };
       return nextState;
     case 'TOGGLE_WORKMORNINGSTART':

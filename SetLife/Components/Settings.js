@@ -19,19 +19,14 @@ class Settings extends React.Component {
         const toggle = { type: "TOGGLE_WAKEUPWEEKEND", value: newValue }
         this.props.dispatch(toggle);
     }
-
-    toggleBreakfast = (newValue) => {
-        const toggle = { type: "TOGGLE_BREAKFAST", value: newValue }
+    
+    toggleBedtimeWeek = (newValue) => {
+        const toggle = { type: "TOGGLE_BEDTIMEWEEK", value: newValue }
         this.props.dispatch(toggle);
     }
 
-    toggleLunch = (newValue) => {
-        const toggle = { type: "TOGGLE_LUNCH", value: newValue }
-        this.props.dispatch(toggle);
-    }
-
-    toggleDinner = (newValue) => {
-        const toggle = { type: "TOGGLE_DINNER", value: newValue }
+    toggleBedtimeWeekend = (newValue) => {
+        const toggle = { type: "TOGGLE_BEDTIMEWEEKEND", value: newValue }
         this.props.dispatch(toggle);
     }
 
@@ -111,13 +106,13 @@ class Settings extends React.Component {
                     </View>
                 </View>
                 <View>
-                    <Text style={stylesSettings.subTitle}>Meal up</Text>
+                    <Text style={stylesSettings.subTitle}>Bed time</Text>
                     <View style={stylesSettings.rowContainer}>
                         <View>
-                            <Text style={stylesSettings.text}>Breakfast</Text>
+                            <Text style={stylesSettings.text}>Week day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.breakfast}
+                                date={this.props.settings.bedtimeWeek}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -134,13 +129,13 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(breakfast) => {this.toggleBreakfast(breakfast)}} />
+                                onDateChange={(bedtimeWeek) => {this.toggleBedtimeWeek(bedtimeWeek)}} />
                         </View>
                         <View>
-                            <Text style={stylesSettings.text}>Lunch</Text>
+                            <Text style={stylesSettings.text}>Weekend day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.lunch}
+                                date={this.props.settings.bedtimeWeekend}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -157,30 +152,7 @@ class Settings extends React.Component {
                                         color: "#F2F2F2"
                                     }
                                 }}
-                                onDateChange={(lunch) => {this.toggleLunch(lunch)}} />
-                        </View>
-                        <View>
-                            <Text style={stylesSettings.text}>Dinner</Text>
-                            <DatePicker 
-                                style={stylesSettings.inputTime}
-                                date={this.props.settings.dinner}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                mode="time"
-                                customStyles={{
-                                    dateIcon: {
-                                        display: 'none'                            
-                                    },
-                                    dateInput: {
-                                        borderWidth: 0
-                                    },
-                                    dateText: {
-                                        fontSize: 19,
-                                        fontWeight: 'bold',
-                                        color: "#F2F2F2"
-                                    }
-                                }}
-                                onDateChange={(dinner) => {this.toggleDinner(dinner)}} />
+                                onDateChange={(bedtimeWeekend) => {this.toggleBedtimeWeekend(bedtimeWeekend)}} />
                         </View>
                     </View>
                 </View>
