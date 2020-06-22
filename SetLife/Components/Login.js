@@ -4,6 +4,7 @@ import React from 'react';
 import {Text, View, Image, TextInput, TouchableOpacity} from "react-native";
 import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
 
 import { stylesLogin } from '../assets/style/stylesheet';
 
@@ -12,7 +13,9 @@ class Login extends React.Component {
         super(props)
         this.state = {
             showPassword: true,
-            press: false
+            press: false,
+            login: "",
+            password: ""
         }
     }
 
@@ -31,10 +34,27 @@ class Login extends React.Component {
     }
 
     signIn() {
+        let user = {
+            login: this.state.login,
+            password: this.state.password
+        };
         // Check login infos here
-        this.props.navigation.navigate('Home');
+        let action = {type: "LOG_IN", value: user};
+        this.props.dispatch(action);
+        // this.props.navigation.navigate('Home');
     }
 
+    onChangeLogin(login) {
+        this.setState({
+            login: login
+        })
+    }
+
+    onChangePassword(password) {
+        this.setState({
+            password: password
+        })
+    }
 
     render() {
         return(
@@ -51,6 +71,7 @@ class Login extends React.Component {
                         placeholderTextColor={'#344644'}
                         underlineColorAndroid='transparent'
                         style={stylesLogin.input}
+                        onChangeText={(login) => this.onChangeLogin(login)}
                     />
                 </View>
 
@@ -62,6 +83,7 @@ class Login extends React.Component {
                         underlineColorAndroid='transparent'
                         secureTextEntry={this.state.showPassword}
                         style={stylesLogin.input}
+                        onChangeText={(password) => this.onChangePassword(password)}
                     />
                     <TouchableOpacity style={stylesLogin.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
                         <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
@@ -76,4 +98,10 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        loginReducer: state.login
+    }
+};
+
+export default connect(mapStateToProps)(Login);
