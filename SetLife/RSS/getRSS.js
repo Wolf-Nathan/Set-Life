@@ -9,7 +9,7 @@ import * as rssParser from 'react-native-rss-parser';
 export default async function getRSS() {
   try {
     // eslint-disable-next-line no-undef
-    const response = await fetch('http://www.nasa.gov/rss/dyn/breaking_news.rss', {
+    const response = await fetch('https://www.spiegel.de/international/index.rss', {
       method: 'GET',
       // mode: 'no-cors',
       headers: {
