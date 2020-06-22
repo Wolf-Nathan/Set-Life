@@ -6,7 +6,6 @@ import { stylesNewsDetails } from '../assets/style/stylesheet';
 
 class NewsDetails extends React.Component {
   render() {
-      // const details = this.props.route.params.newsDetails;
       return (
           <View style={stylesNewsDetails.container}>
               <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>

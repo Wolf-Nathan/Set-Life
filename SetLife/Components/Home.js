@@ -21,7 +21,6 @@ class Home extends React.Component {
      */
     async loadRss() {
         let dataNews = await this.props.rssReducer.rss.catch(() => false);
-        console.log(dataNews);
         this.setState({dataNews: dataNews});
     }
 

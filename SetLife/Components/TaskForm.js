@@ -29,6 +29,7 @@ class TaskForm extends React.Component {
                     taskName: task.name,
                     date: task.hourChoice === "fix" ? task.date + " " + task.startHour : task.date,
                     typeChoice: task.type,
+                    secondTypeChoice: task.secondType,
                     recurrenceChoice: task.type === "recurrent" ? task.recurrence : null,
                     hourChoice: task.hourChoice,
                     importance: task.importance,
@@ -38,20 +39,25 @@ class TaskForm extends React.Component {
             else {
                 this.state = {
                     typeChoice: "date",
+                    secondTypeChoice: "freeTime",
                     date: dateDefault,
                     hourChoice: "free",
                     importance: 3,
-                    duration: "01:00"
+                    duration: "01:00",
+                    recurrenceChoice: "day"
                 }
             }
         }
         else {
             this.state = {
                 typeChoice: "date",
+                secondTypeChoice: "freeTime",
                 date: dateDefault,
                 hourChoice: "free",
                 importance: 3,
-                duration: "01:00"
+                duration: "01:00",
+                recurrenceChoice: "day"
+
             }
         }
     }
@@ -60,11 +66,18 @@ class TaskForm extends React.Component {
      * Function to make form at default value.
      */
     cleanForm(){
+        let now = new Date();
+        let nowDate = now.getDate().toString().padStart(2,'0') +"/"+
+            (now.getMonth() +1 ).toString().padStart(2,'0') +"/"+
+            now.getFullYear();
+        let nowHours = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
+        let dateDefault = nowDate + ":" + nowHours;
         this.setState({
             taskName: "",
-            date: "",
+            date: dateDefault,
             typeChoice: "date",
-            recurrenceChoice: "",
+            secondTypeChoice: "freeTime",
+            recurrenceChoice: "day",
             hourChoice: "free",
             importance: 3,
             duration: "01:00"
@@ -102,6 +115,14 @@ class TaskForm extends React.Component {
      */
     typeChoice(text) {
         this.setState({typeChoice: text});
+    }
+
+    /*
+     * Change secondTypeChoice in the state
+     * @String text
+     */
+    secondTypeChoice (text) {
+        this.setState({secondTypeChoice: text});
     }
 
     /*
@@ -235,6 +256,7 @@ class TaskForm extends React.Component {
             name: this.state.taskName,
             date: this.state.date.substr(0, 10),
             type: this.state.typeChoice,
+            secondType: this.state.secondTypeChoice,
             recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
             hourChoice: this.state.hourChoice,
             startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null,
@@ -366,6 +388,23 @@ class TaskForm extends React.Component {
                         </TouchableOpacity>
                     </View>
                     {this.recurrence()}
+                    <Text style={stylesTaskForm.label}>Task of Work or Free-time ?</Text>
+                    <View style={stylesTaskForm.choiceContainer}>
+                        <TouchableOpacity
+                            style={this.state.secondTypeChoice === "freeTime" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
+                            onPress={() => this.secondTypeChoice("freeTime")}>
+                            <Text style={stylesTaskForm.buttonText}>
+                                Free-time
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={this.state.secondTypeChoice === "work" ? stylesTaskForm.boxSelected : stylesTaskForm.box}
+                            onPress={() => this.secondTypeChoice("work")}>
+                            <Text style={stylesTaskForm.buttonText}>
+                                Work
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                     <Text style={stylesTaskForm.label}>Duration</Text>
                     <DatePicker
                         style={stylesTaskForm.input}
