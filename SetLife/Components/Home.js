@@ -1,7 +1,7 @@
 // Components/Home.js
 
 import React from 'react'
-import { Text, View, FlatList } from "react-native";
+import {Text, View, FlatList, TouchableOpacity} from "react-native";
 import RowTask from './RowTask';
 import { connect } from "react-redux";
 import { stylesHome } from '../assets/style/stylesheet';
@@ -40,7 +40,9 @@ class Home extends React.Component {
                         data={this.state.dataNews.items}
                         renderItem={({item}) => {
                             return(
-                                <RowNews item={item} />
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('NewsDetails', {newsDetails: item.description})}>
+                                    <RowNews item={item} />
+                                </TouchableOpacity>
                             )
                         }}
                         keyExtractor={(item, index)=> index}
@@ -76,7 +78,9 @@ class Home extends React.Component {
                                 data={listDayTasks}
                                 renderItem={({ item }) => {
                                     return(
-                                        <RowTask item={item} />
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskForm', {taskId: item.id})}>
+                                            <RowTask item={item} />
+                                        </TouchableOpacity>
                                     )}
                                 }
                                 keyExtractor={(item, index)=> index}

@@ -14,9 +14,25 @@ import Calendar from '../Components/Calendar';
 import Tasks from '../Components/Tasks';
 import Settings from '../Components/Settings';
 import TaskForm from "../Components/TaskForm";
+import NewsDetails from "../Components/NewsDetails";
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
+
+function HomepageStackNavigator() {
+    return (
+        <Stack.Navigator
+            initialRouteName= "Opening"
+            screenOptions={{
+                headerShown: false
+            }}
+        >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="TaskForm" component={TaskForm} />
+            <Stack.Screen name="NewsDetails" component={NewsDetails}/>
+        </Stack.Navigator>
+    );
+}
 
 function TasksStackNavigator() {
     return (
@@ -45,7 +61,7 @@ function TabNavigator() {
     >
         <Tab.Screen 
             name="Home" 
-            component={Home} 
+            component={HomepageStackNavigator}
             options={{
                 tabBarLabel: 'Home',
                 tabBarIcon: ({ color }) => (

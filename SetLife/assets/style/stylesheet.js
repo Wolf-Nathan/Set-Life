@@ -438,4 +438,47 @@ export const stylesWeekdaySelector = StyleSheet.create({
         color: '#F2F2F2',
         textAlign: 'center'
     }
-})
+});
+
+// NewsDetails
+
+export const stylesNewsDetails = StyleSheet.create({
+  container: {
+    backgroundColor: '#F2F2F2',
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  },
+    helloText: {
+        fontFamily: 'Montserrat',
+        color: '#344644',
+        fontSize: 30,
+        textAlign: 'center'
+    },
+    dateText: {
+        fontFamily: 'Montserrat',
+        color: '#77897F',
+        fontSize: 24,
+        textAlign: 'center'
+    },
+    dayProgramText: {
+        fontFamily: 'Montserrat',
+        color: '#77897F',
+        fontSize: 22,
+        marginLeft: 10
+    },
+    dayOffContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    freeDayText: {
+        fontFamily: 'Montserrat',
+        color: '#1B5044',
+        fontSize: 26,
+    },
+    freeDayLabel: {
+        fontFamily: 'Montserrat',
+        color: '#344644',
+        fontSize: 24,
+    }
+});
