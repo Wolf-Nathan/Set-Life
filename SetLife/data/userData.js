@@ -7,7 +7,7 @@ const users = [
   {
     login: 'user',
     password: 'user_password',
-    username: 'user',
+    username: 'nelu',
   },
 ];
 

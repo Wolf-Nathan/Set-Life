@@ -15,7 +15,7 @@ class Login extends React.Component {
             showPassword: true,
             press: false,
             login: "",
-            password: ""
+            password: "",
         }
     }
 
@@ -41,7 +41,18 @@ class Login extends React.Component {
         // Check login infos here
         let action = {type: "LOG_IN", value: user};
         this.props.dispatch(action);
-        // this.props.navigation.navigate('Home');
+
+        if(this.props.loginReducer.logged) {
+            this.props.navigation.navigate('Home');
+        } 
+    }
+
+    errorConnection() {
+        if(this.props.loginReducer.emptyFields) {
+            return(
+                <Text style={ {marginTop: 50} }>Veuillez renseigner tous les champs</Text>
+            );
+        }
     }
 
     onChangeLogin(login) {
@@ -93,6 +104,7 @@ class Login extends React.Component {
                 <TouchableOpacity style={stylesLogin.ctaLogin} onPress={() => this.signIn()}>
                     <Text style={stylesLogin.textLogin}>Sign in</Text>
                 </TouchableOpacity>
+                {this.errorConnection()}
             </View>
         )
     }
