@@ -50,7 +50,17 @@ class Login extends React.Component {
     errorConnection() {
         if(this.props.loginReducer.emptyFields) {
             return(
-                <Text style={ {marginTop: 50} }>Veuillez renseigner tous les champs</Text>
+                <Text style={ {marginTop: 50} }>Veuillez renseigner tous les champs.</Text>
+            );
+        }
+        if(this.props.loginReducer.userExist === false) {
+            return(
+                <Text style={ {marginTop: 50} }>L'utilisateur n'existe pas.</Text>
+            );
+        }
+        if(this.props.loginReducer.wrongPassword) {
+            return(
+                <Text style={ {marginTop: 50} }>Le mots de passe rensigné n'est pas corrécte.</Text>
             );
         }
     }
