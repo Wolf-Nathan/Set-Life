@@ -78,7 +78,7 @@ class Home extends React.Component {
 
         return (
             <View style={stylesHome.container}>
-                <Text style={stylesHome.helloText}>Hello Gringo</Text>
+                <Text style={stylesHome.helloText}>Hello {this.props.loginReducer.username}</Text>
                 <Text style={stylesHome.dateText}>{date}</Text>
                 {
                     listDayTasks.length ?
@@ -93,7 +93,7 @@ class Home extends React.Component {
                                         </TouchableOpacity>
                                     )}
                                 }
-                                keyExtractor={(item, index)=> index}
+                                keyExtractor={(item, index)=> index.toString()}
                                 />
                         </View>
                     :
@@ -114,7 +114,8 @@ class Home extends React.Component {
 const mapStateToProps = state => {
     return {
         taskReducer: state.task,
-        rssReducer: state.rss
+        rssReducer: state.rss,
+        loginReducer: state.login
     }
 };
 

@@ -4,6 +4,7 @@ import React from 'react';
 import {Text, View, Image, TextInput, TouchableOpacity} from "react-native";
 import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
 
 import { stylesRegister } from '../assets/style/stylesheet';
 
@@ -13,7 +14,11 @@ class Register extends React.Component {
         super(props)
         this.state = {
             showPassword: true,
-            press: false
+            press: false,
+            username: "",
+            login: "",
+            password: "",
+            confirmPassword: ""
         }
     }
 
@@ -28,6 +33,63 @@ class Register extends React.Component {
                 showPassword: true,
                 press: false
             })
+        }
+    }
+
+    signUp() {
+        let newUser = {
+            username: this.state.username,
+            login: this.state.login,
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword
+        };
+        let action = {type: "SIGN_UP", value: newUser};
+        this.props.dispatch(action);
+
+        if(this.props.loginReducer.signUpSuccess) {
+            this.props.navigation.navigate('Login');
+        }
+    }
+
+    onChangeUsername(username) {
+        this.setState({
+            username: username
+        })
+    }
+
+    onChangeLogin(login) {
+        this.setState({
+            login: login
+        })
+    }
+
+    onChangePassword(password) {
+        this.setState({
+            password: password
+        })
+    }
+
+    onChangeConfirmPassword(confirmPassword) {
+        this.setState({
+            confirmPassword: confirmPassword
+        })
+    }
+
+    errorSignUp() {
+        if(this.props.loginReducer.emptyFields) {
+            return(
+                <Text style={ {marginTop: 50} }>Veuillez renseigner tous les champs.</Text>
+            );
+        }
+        if(this.props.loginReducer.loginUsed) {
+            return(
+                <Text style={ {marginTop: 50} }>Le login est déjà pris.</Text>
+            );
+        }
+        if(!this.props.loginReducer.confirmPassword) {
+            return(
+                <Text style={ {marginTop: 50} }>Les mots de passe ne correspondent pas.</Text>
+            );
         }
     }
 
@@ -46,6 +108,18 @@ class Register extends React.Component {
                         placeholderTextColor={'#344644'}
                         underlineColorAndroid='transparent'
                         style={stylesRegister.input}
+                        onChangeText={(username) => this.onChangeUsername(username)}
+                    />
+                </View>
+
+                <View style={stylesRegister.formContainer}>
+                    <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
+                    <TextInput 
+                        placeholder={'Login'}
+                        placeholderTextColor={'#344644'}
+                        underlineColorAndroid='transparent'
+                        style={stylesRegister.input}
+                        onChangeText={(login) => this.onChangeLogin(login)}
                     />
                 </View>
 
@@ -57,6 +131,7 @@ class Register extends React.Component {
                         underlineColorAndroid='transparent'
                         secureTextEntry={this.state.showPassword}
                         style={stylesRegister.input}
+                        onChangeText={(password) => this.onChangePassword(password)}
                     />
                     <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
                         <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
@@ -71,6 +146,7 @@ class Register extends React.Component {
                         underlineColorAndroid='transparent'
                         secureTextEntry={this.state.showPassword}
                         style={stylesRegister.input}
+                        onChangeText={(confirmPassword) => this.onChangeConfirmPassword(confirmPassword)}
                     />
                     <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
                         <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
@@ -78,11 +154,18 @@ class Register extends React.Component {
                 </View>
 
                 <TouchableOpacity style={stylesRegister.ctaLogin}>
-                    <Text style={stylesRegister.textLogin}>Sign up</Text>
+                    <Text style={stylesRegister.textLogin} onPress={() => this.signUp()}>Sign up</Text>
                 </TouchableOpacity>
+                {this.errorSignUp()}
             </View>
         )
     }
 }
 
-export default Register;
+const mapStateToProps = state => {
+    return {
+        loginReducer: state.login
+    }
+}
+
+export default connect(mapStateToProps)(Register);
