@@ -1,14 +1,8 @@
 const INITIAL_STATE = {
   wakeupWeek: "08:00",
   wakeupWeekend: "10:00",
-<<<<<<< HEAD
   bedtimeWeek: "22:30",
   bedtimeWeekend: "23:30",
-=======
-  breakfast: "09:00",
-  lunch: "12:00",
-  dinner: "19:30",
->>>>>>> advancement commit
   workday: {
     monday: true,
     tuesday: true,
