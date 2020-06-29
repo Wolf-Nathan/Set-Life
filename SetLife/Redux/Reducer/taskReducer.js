@@ -2,6 +2,12 @@
 
 const initialState = { taskList: [] };
 
+/**
+ * Function manage taskReducer.
+ * @param state
+ * @param action
+ * @returns {{taskList: *[]}|{taskList: []}|{taskList: ([]|*[])}}
+ */
 function toggleTaskList(state = initialState, action) {
   let nextState;
   let task;

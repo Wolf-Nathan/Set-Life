@@ -7,11 +7,15 @@ import {connect} from 'react-redux';
 
 import { stylesTaskForm } from '../assets/style/stylesheet';
 
-/*
+/**
  * Component for Task Form.
+ * @class TaskForm
+ * @extends {Component}
  */
 class TaskForm extends React.Component {
-
+    /**
+     * @param props
+     */
     constructor(props) {
         super(props);
         const taskId = this.props.route.params ? this.props.route.params.taskId : null;
@@ -62,7 +66,7 @@ class TaskForm extends React.Component {
         }
     }
 
-    /*
+    /**
      * Function to make form at default value.
      */
     cleanForm(){
@@ -84,7 +88,7 @@ class TaskForm extends React.Component {
         })
     }
 
-    /*
+    /**
      * Delete the task from the application data.
      */
     deleteTask() {
@@ -93,56 +97,57 @@ class TaskForm extends React.Component {
         this.props.navigation.navigate("Tasks");
     }
 
-    /*
+    /**
      * Change taskName in the state.
-     * @String text
+     * @param text
      */
     onChangeTaskName(text) {
         this.setState({taskName: text});
     }
 
-    /*
+    /**
      * Change hourChoice in the state.
-     * @String text
+     * @param text
      */
     hourChoice(text){
         this.setState({hourChoice: text});
     }
 
-    /*
+    /**
      * Change typeChoice in the state.
-     * @String text
+     * @param text
      */
     typeChoice(text) {
         this.setState({typeChoice: text});
     }
 
-    /*
+    /**
      * Change secondTypeChoice in the state
-     * @String text
+     * @param text
      */
     secondTypeChoice (text) {
         this.setState({secondTypeChoice: text});
     }
 
-    /*
+    /**
      * Change recurrenceChoice in the state.
-     * @String text
+     * @param text
      */
     recurrenceChoice(text) {
         this.setState({recurrenceChoice: text});
     }
 
-    /*
+    /**
      * Change importance in the state.
-     * @integer importance
+     * @param importance
      */
     importanceChoice(importance) {
         this.setState({importance: importance});
     }
 
-    /*
+    /**
      * Return DatePicker view in function of the hourChoice.
+     * @returns {DatePicker}
      */
     dateInput() {
         if (this.state.hourChoice === "fix") {
@@ -193,8 +198,9 @@ class TaskForm extends React.Component {
         }
     }
 
-    /*
+    /**
      * Return choice of recurrence View if type selected is recurrent.
+     * @returns {View|null}
      */
     recurrence() {
         if (this.state.typeChoice === "recurrent") {
@@ -235,9 +241,11 @@ class TaskForm extends React.Component {
             )
         }
     }
-    /*
+
+    /**
      * Add a 0 before a string if he has one character to make it Hour format.
-     * @int value
+     * @param value
+     * @returns {string|*}
      */
     convertTimer(value) {
         let string = value.toString();
@@ -247,9 +255,9 @@ class TaskForm extends React.Component {
         return value;
     }
 
-    /*
-     * Get data from the state to the task.
-     * @return Object task
+    /**
+     * Get data from the state to the task
+     * @returns {{date, recurrence: (null|*|null), duration, hourChoice, endHour: null, startHour: (string|null), importance, name: string, type, secondType}}
      */
     dataToTask() {
         let task = {
@@ -310,6 +318,10 @@ class TaskForm extends React.Component {
         return task;
     }
 
+    /**
+     * Return an error message if user click on save and don't write a task name.
+     * @returns {Text}
+     */
     errorName(){
         if(this.state.errorName !== null && this.state.errorName !== "") {
             return (
@@ -318,6 +330,10 @@ class TaskForm extends React.Component {
         }
     }
 
+    /**
+     * Valid the form data.
+     * @returns {boolean}
+     */
     correctForm(){
         if (this.state.taskName !== "" && this.state.taskName !== null ) {
             return true;
@@ -328,7 +344,7 @@ class TaskForm extends React.Component {
         }
     }
 
-    /*
+    /**
      * Make action with the taskReducer to save or update the task
      * in function of the situation, then return to Tasks View.
      */
@@ -351,8 +367,11 @@ class TaskForm extends React.Component {
         }
     }
 
-    /*
+
+    /**
      * Get a task in the list by his id.
+     * @param taskId
+     * @returns {int|null}
      */
     getTask(taskId){
         let selectTask = null;
@@ -365,6 +384,10 @@ class TaskForm extends React.Component {
         return selectTask;
     }
 
+    /**
+     * Render the TaskForm component for a new task or edit a task.
+     * @returns {View}
+     */
     render() {
         return (
             <View style={stylesTaskForm.container}>

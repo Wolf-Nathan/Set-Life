@@ -1,10 +1,13 @@
 const initState = { favoritesTasks: [] };
 
 function toggleFavorite(state = initState, action) {
-  let nextstate;
+  let nextState;
   switch (action.type) {
     case 'TOGGLE_FAVORITE':
-      const favoriteTaskIndex = state.favoritesTasks.findIndex((item) => item.id === action.value.id);
+      // eslint-disable-next-line no-case-declarations
+      const favoriteTaskIndex = state.favoritesTasks.findIndex(
+        (item) => item.id === action.value.id
+      );
       if (favoriteTaskIndex !== -1) {
         // delete task from favorite list
         nextState = {
@@ -13,7 +16,7 @@ function toggleFavorite(state = initState, action) {
         };
       } else {
         // add task to favorite list
-        nextstate = {
+        nextState = {
           ...state,
           favoriteTask: [...state.favoritesTasks, action.value],
         };
