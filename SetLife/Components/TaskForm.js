@@ -286,6 +286,7 @@ class TaskForm extends React.Component {
                     endHour = endHour - 24;
                 }
                 endHour = this.convertTimer(endHour);
+                startMinute = this.convertTimer(startMinute);
                 task.endHour = endHour + ":" + startMinute;
             }
             else {
