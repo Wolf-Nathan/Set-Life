@@ -71,7 +71,7 @@ class Home extends React.Component {
                 <Text style={stylesHome.dateText}>{date}</Text>
                 {
                     listDayTasks.length ?
-                        <View>
+                        <View style={stylesHome.dayProgramView}>
                             <Text style={stylesHome.dayProgramText}>Your day program</Text>
                             <FlatList
                                 data={listDayTasks}
@@ -91,7 +91,7 @@ class Home extends React.Component {
                             <Text style={stylesHome.freeDayLabel}>See you tomorrow !</Text>
                         </View>
                 }
-                <View>
+                <View style={stylesHome.newsView}>
                     <Text style={stylesHome.dayProgramText}>News</Text>
                     { this.showNews() }
                 </View>

@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
 
-const { width: WIDTH } = Dimensions.get('window');
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 // App
 export const stylesApp = StyleSheet.create({
@@ -35,6 +35,12 @@ export const stylesHome = StyleSheet.create({
         color: '#77897F',
         fontSize: 24,
         textAlign: 'center'
+    },
+    dayProgramView: {
+        height: (HEIGHT/100)*37,
+    },
+    newsView: {
+      height: (HEIGHT/100)*37,
     },
     dayProgramText: {
         fontFamily: 'Montserrat',
