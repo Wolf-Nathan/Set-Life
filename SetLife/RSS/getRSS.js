@@ -2,9 +2,9 @@
 
 import * as rssParser from 'react-native-rss-parser';
 
-/*
+/**
  * Async function load a feed of RSS.
- * @return Promise||null
+ * @returns {Promise<null|any>}
  */
 export default async function getRSS() {
   try {

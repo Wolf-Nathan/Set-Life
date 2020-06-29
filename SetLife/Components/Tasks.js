@@ -9,8 +9,9 @@ import { stylesTasks } from '../assets/style/stylesheet';
 
 class Tasks extends React.Component {
 
-    /*
+    /**
      * Return the list of tasks or a message if there is no task.
+     * @returns {View|Text}
      */
     taskList() {
         if (this.props.taskReducer.taskList.length > 0) {
@@ -36,6 +37,10 @@ class Tasks extends React.Component {
         }
     }
 
+    /**
+     * Render the View of Tasks component.
+     * @returns {View}
+     */
     render() {
         return (
             <View>

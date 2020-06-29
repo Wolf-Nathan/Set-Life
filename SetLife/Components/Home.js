@@ -9,6 +9,11 @@ import RowNews from "./RowNews";
 
 let limitOne = 1;
 
+/**
+ * Component for Home view.
+ * @class Home
+ * @extends {Component}
+ */
 class Home extends React.Component {
 
     constructor (props) {
@@ -16,16 +21,18 @@ class Home extends React.Component {
         this.state = {};
     }
 
-    /*
+    /**
      * Function to collect data from the Promise get by the Reducer.
+     * @returns {Promise<void>}
      */
     async loadRss() {
         let dataNews = await this.props.rssReducer.rss.catch(() => false);
         this.setState({dataNews: dataNews});
     }
 
-    /*
-     * Show the list of News if theyre load.
+    /**
+     * Show the list of News if there load.
+     * @returns {View|null}
      */
     showNews() {
         if (limitOne === 1) {
@@ -51,6 +58,10 @@ class Home extends React.Component {
         }
     }
 
+    /**
+     * Render the view of the Home component.
+     * @returns {View}
+     */
     render() {
         const date = new Date().toDateString();
         const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };

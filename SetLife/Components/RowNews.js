@@ -6,8 +6,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { stylesRowTask } from '../assets/style/stylesheet';
 
+/**
+ * Component to show News.
+ * @class RowNews
+ * @extends {Component}
+ */
 export default class RowNews extends React.Component {
 
+    /**
+     * Render the View of RowNews component.
+     * @returns {View}
+     */
     render() {
         const news = this.props.item;
         // Get date of news.
