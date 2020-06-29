@@ -309,25 +309,45 @@ class TaskForm extends React.Component {
         return task;
     }
 
+    errorName(){
+        if(this.state.errorName !== null && this.state.errorName !== "") {
+            return (
+                <Text style={stylesTaskForm.label}>{this.state.errorName}</Text>
+            )
+        }
+    }
+
+    correctForm(){
+        if (this.state.taskName !== "" && this.state.taskName !== null ) {
+            return true;
+        }
+        else {
+            this.setState({errorName: "You need to enter a name for the task !"});
+            return false;
+        }
+    }
+
     /*
      * Make action with the taskReducer to save or update the task
      * in function of the situation, then return to Tasks View.
      */
     save(){
-        // If we already have a taskId we edit a task.
-        if (this.state.taskId) {
-            let task = this.dataToTask();
-            task.id = this.state.taskId;
-            let action = {type: "UPDATE_TASK", value: task};
-            this.props.dispatch(action);
+        if(this.correctForm()) {
+            // If we already have a taskId we edit a task.
+            if (this.state.taskId) {
+                let task = this.dataToTask();
+                task.id = this.state.taskId;
+                let action = {type: "UPDATE_TASK", value: task};
+                this.props.dispatch(action);
+            }
+            // If we haven't it's a new task.
+            else {
+                let task = this.dataToTask();
+                let action = {type: "ADD_TASK", value: task};
+                this.props.dispatch(action);
+            }
+            this.props.navigation.navigate('Tasks');
         }
-        // If we haven't it's a new task.
-        else {
-            let task = this.dataToTask();
-            let action = {type: "ADD_TASK", value: task};
-            this.props.dispatch(action);
-        }
-        this.props.navigation.navigate('Tasks');
     }
 
     /*
@@ -348,7 +368,8 @@ class TaskForm extends React.Component {
         return (
             <View style={stylesTaskForm.container}>
                 <ScrollView>
-                    <Text style={stylesTaskForm.title}>New task</Text>
+                    <Text style={stylesTaskForm.title}>{ this.state.taskId ? "Edit task" : "New task" }</Text>
+                    { this.errorName()}
                     <Text style={stylesTaskForm.label}>Name</Text>
                     <TextInput style={stylesTaskForm.input} value={this.state.taskName} onChangeText={text => this.onChangeTaskName(text)}/>
                     <Text style={stylesTaskForm.label}>Hour</Text>
