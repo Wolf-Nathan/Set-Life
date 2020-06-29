@@ -46,7 +46,7 @@ class Home extends React.Component {
                         data={this.state.dataNews.items}
                         renderItem={({item}) => {
                             return(
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('NewsDetails', {newsDetails: item.description})}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('NewsDetails', {newsDetails: item})}>
                                     <RowNews item={item} />
                                 </TouchableOpacity>
                             )
