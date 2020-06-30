@@ -6,10 +6,15 @@ import { Calendar, CalendarList, Agenda, LocaleConfig } from 'react-native-calen
 import Constants from 'expo-constants';
 import RowTask from './RowTask';
 import {connect} from "react-redux";
+import { Switch } from 'react-native-paper';
 
 class CustomCalendar extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            agendaTab : {},
+            markedDates : {}
+        }
     }
 
     /*
@@ -18,74 +23,138 @@ class CustomCalendar extends React.Component {
     createPlanning() {
         let taskList = this.props.taskReducer.taskList;
         let sortedTasks = this.sortTasks(taskList);
-        let agendaTab = this.determineAgenda(1);
+        this.state.agendaTab = this.determineAgenda(2);
 
         for(let i = 0; i < sortedTasks.length; i++) {
             let taskI = sortedTasks[i].task;
+            console.log(taskI.name);
             let dateTask = this.changeDateFormat(taskI.date.substr(0,10));
-
-            let quarterNb = this.calculateDurationQuarter(taskI.duration);
-
-            let timeAttribute;
-            let quarterStart;
-            if(taskI.hourChoice === "fix"){
-                timeAttribute = taskI.date.substr(11);
-                timeAttribute = timeAttribute.substr(0,2);
-                quarterStart = Number(taskI.date.substr(11))/15 ;
-                quarterStart = quarterStart > 0 ? Math.trunc(quarterStart) + 1 : durationResult;
-                
-                for(let i = 0; i<quarterNb; i++){
-                    agendaTab[dateTask][timeAttribute]["quarter"+(quarterStart%5)].push(taskId)
-                }
-            }else{
-                let timeEndDay;
-                timeAttribute,quarterStart,timeEndDay = this.initTaskVars(agendaTab,dateTask,taskI,timeAttribute,quarterStart,timeEndDay)
-
-                while(agendaTab[dateTask][timeAttribute]["quarter"+quarterStart].length > 0){
-                    quarterStart++;
-                    if(quarterStart > 4){
-                        quarterStart = quarterStart%5;
-
-                        let newHour = Number(timeAttribute) +1;
-                        if(newHour>timeEndDay){
-                            let tomorrow = new Date (dateTask);
-                            tomorrow.setDate(tomorrow.getDate()+1);
-                            dateTask = this.changeDateFormat(tomorrow.toString())
-                            
-                            timeAttribute,quarterStart,timeEndDay = this.initTaskVars(agendaTab,dateTask,taskI,timeAttribute,quarterStart,timeEndDay)
-                        }else {
-                            timeAttribute = newHour.toString().padStart(2,'0');
-                        }
-                    }
-                }
-
-                for(let i = 0; i<quarterNb; i++){
-                    agendaTab[dateTask][timeAttribute]["quarter"+(quarterStart%5)].push(taskId)
-                }
-            }
-
-            agendaTab[dateTask][timeAttribute]["quarter"+quarterStart]
+            this.state.agendaTab = this.assignTaskToAgenda(this.state.agendaTab,taskI,dateTask);
         }
 
-        console.log(agendaTab);
+        console.log(this.state.agendaTab[Object.keys(this.state.agendaTab)[29]]);
         //console.log(this.props.settings);
     }
 
-    initTaskVars(agendaTab, dateTask, taskI, timeAttribute, quarterStart, timeEndDay){
-        if(agendaTab[dateTask].work === true && taskI.workTask ){
-            timeAttribute = this.props.workMorningStart.substr(0,2);
-            quarterStart = this.calculateDurationQuarter("00:"+this.props.workMorningStart.substr(0,3));
-            timeEndDay = Number(this.props.workAfternoonEnd.substr(0,2));
-        }else if(agendaTab[dateTask].work === true && !taskI.workTask ){
-            timeAttribute = this.props.wakeupWeek.substr(0,2);
-            quarterStart = this.calculateDurationQuarter("00:"+this.props.wakeupWeek.substr(0,3));
-            timeEndDay = Number(this.props.bedtimeWeek.substr(0,2));
-        }else {
-            timeAttribute = this.props.wakeupWeekEnd.substr(0,2);
-            quarterStart = this.calculateDurationQuarter("00:"+this.props.wakeupWeekEnd.substr(0,3));
-            timeEndDay = Number(this.props.bedtimeWeekend.substr(0,2));
+    assignTaskToAgenda(agendaTab,taskI,dateTask){
+        console.log("1")
+        if(agendaTab[dateTask] === undefined){
+            return agendaTab;
         }
-        return timeAttribute,quarterStart,timeEndDay;
+
+        let quarterNb = this.calculateDurationQuarter(taskI.duration);
+
+        let timeAttribute;
+        let quarterStart;
+        let timeEndDay;
+
+        function changeHourAndDate(){
+            let newHour = Number(timeAttribute) +1;
+            if(newHour>timeEndDay){
+                let tomorrow = new Date (dateTask);
+                tomorrow.setDate(tomorrow.getDate()+1);
+                dateTask = tomorrow.getFullYear()+"-"
+                +tomorrow.getMonth()+"-"
+                +tomorrow.getDate();
+                
+                let values = this.initTaskVars(agendaTab,dateTask,taskI,timeAttribute,quarterStart,timeEndDay);
+                timeAttribute = values[0];
+                quarterStart = values[1];
+                timeEndDay = values[2];
+            }else {
+                timeAttribute = newHour.toString().padStart(2,'0');
+            }
+        }
+
+        let values = this.initTaskVars(agendaTab,dateTask,taskI,timeAttribute,quarterStart,timeEndDay);
+        timeAttribute = values[0];
+        quarterStart = values[1];
+        timeEndDay = values[2];
+
+        if(taskI.hourChoice === "fix"){
+            timeAttribute = taskI.startHour.substr(0,2);
+            quarterStart = Number(taskI.date.substr(11))/15 ;
+            quarterStart = quarterStart > 0 ? Math.trunc(quarterStart) + 1 : quarterStart;
+            for(let i = quarterStart; i<quarterStart+quarterNb; i++){
+                if(i%5 === 0 && i !== 0){
+                    changeHourAndDate();
+                }
+                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI.id);
+            }
+            agendaTab[dateTask].hasTask=true;
+        }else{
+            while(agendaTab[dateTask][timeAttribute]["quarter"+quarterStart].length > 0){
+                quarterStart++;
+                if(quarterStart > 4){
+                    quarterStart = quarterStart%5;
+                    changeHourAndDate();
+                }
+            }
+
+            for(let i = 0; i<quarterNb; i++){
+                if(i%5 === 0 && i !== 0){
+                    changeHourAndDate();
+                }
+                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI.id);
+            }
+            agendaTab[dateTask].hasTask=true;
+
+        }
+
+        if(taskI.type === "recurrent"){
+            let date = new Date (dateTask);
+            switch (taskI.recurrenceChoice) {
+                case "hour":
+                    changeHourAndDate();
+                    break;
+                case "day":
+                    date.setDate(dare.getDate()+1);
+                    break;
+                case "week":
+                    date.setDate(dare.getDate()+7);
+                    break;
+                case "month":
+                    date.setMonth(dare.getMonth()+1);
+                    break;
+                default:
+                    break;
+            }
+
+
+            dateTask = date.getFullYear()+"-"
+                +(date.getMonth()+1).toString().padStart(2,'0')+"-"
+                +date.getDate().toString().padStart(2,'0');
+
+            console.log("date task : " + dateTask);
+
+            return this.assignTaskToAgenda(agendaTab,taskI, dateTask);
+        }
+
+        return agendaTab;
+    }
+
+    initTaskVars(agendaTab, dateTask, taskI, timeAttribute, quarterStart, timeEndDay){
+
+        if(agendaTab[dateTask].work === true && taskI.secondType === "work" ){
+            timeAttribute = this.props.settings.workMorningStart.substr(0,2);
+            quarterStart = this.calculateDurationQuarter("00:"+this.props.settings.workMorningStart.substr(3));
+            timeEndDay = Number(this.props.settings.workAfternoonEnd.substr(0,2));
+        }else if(agendaTab[dateTask].work === true && taskI.secondType !== "work" ){
+            if(timeAttribute === this.props.settings.wakeupWeek.substr(0,2)){
+                timeAttribute = this.props.settings.workAfternoonEnd.substr(0,2);
+                quarterStart = this.calculateDurationQuarter("00:"+this.props.settings.workAfternoonEnd.substr(3));
+                timeEndDay = Number(this.props.settings.bedtimeWeek.substr(0,2));
+            }else{
+                timeAttribute = this.props.settings.wakeupWeek.substr(0,2);
+                quarterStart = this.calculateDurationQuarter("00:"+this.props.settings.wakeupWeek.substr(3));
+                timeEndDay = Number(this.props.settings.workMorningStart.substr(0,2));
+            }
+        }else {
+            timeAttribute = this.props.settings.wakeupWeekend.substr(0,2);
+            quarterStart = this.calculateDurationQuarter("00:"+this.props.settings.wakeupWeekend.substr(3));
+            timeEndDay = Number(this.props.settings.bedtimeWeekend.substr(0,2));
+        }
+        return [timeAttribute,quarterStart,timeEndDay];
     }
 
     calculateDurationQuarter(duration){
@@ -161,7 +230,7 @@ class CustomCalendar extends React.Component {
         }
         scoringTab.sort(this.compareTaskScoring);
         scoringTab.reverse();
-        console.log(scoringTab)
+        //console.log(scoringTab)
         return scoringTab;
     }
 
@@ -174,12 +243,12 @@ class CustomCalendar extends React.Component {
         } else if (b.score > a.score){
             return -1;
         } else {
-            let aDurationMin = a.duration.substr(3);
-            let aDurationHour = parseInt(a.duration.substr(0,2))*60;
+            let aDurationMin = a.task.duration.substr(3);
+            let aDurationHour = parseInt(a.task.duration.substr(0,2))*60;
             let aDuration = parseInt(aDurationMin) + aDurationHour;
 
-            let bDurationMin = b.duration.substr(3);
-            let bDurationHour = parseInt(b.duration.substr(0,2))*60;
+            let bDurationMin = b.task.duration.substr(3);
+            let bDurationHour = parseInt(b.task.duration.substr(0,2))*60;
             let bDuration = parseInt(bDurationMin) + bDurationHour;
 
             if(aDuration > bDuration){
@@ -247,9 +316,6 @@ class CustomCalendar extends React.Component {
             default :
                 console.log("unknown day : " + date.getDay());
         }
-        //console.log("day : " + date.getDay());
-
-        //console.log("work : " + work);
 
         if (work === true){
             startTime = this.props.settings.wakeupWeek;
@@ -259,19 +325,15 @@ class CustomCalendar extends React.Component {
             endTime = this.props.settings.bedtimeWeekend;
         }
 
-        //console.log("starttime : " + Number(startTime.substr(0, 2)));
-        //console.log("starttime : " + endTime);
-
         durationDay = Number(endTime.substr(0, 2)) - Number(startTime.substr(0, 2));
-        let finalObject = {work : work};
+        let finalObject = {work : work, hasTask : false};
         for(let i = Number(startTime.substr(0, 2)); i <= Number(endTime.substr(0, 2)); i++){
             finalObject[i.toString().padStart(2,'0')] = {
                 quarter0 : [],
                 quarter1 : [],
                 quarter2 : [],
                 quarter3 : [],
-                quarter4 : [],
-                full : false
+                quarter4 : []
             }
         }
 
@@ -279,10 +341,10 @@ class CustomCalendar extends React.Component {
     }
 
     changeDateFormat(dateString){
-        let date = new Date(dateString);
-        let dateFinal = date.getFullYear() +"-"+
-            (date.getMonth() +1 ).toString().padStart(2,'0') +"-"+
-            date.getDate().toString().padStart(2,'0');
+        let date = dateString.split("/");
+        let dateFinal = date[2] +"-"+
+        date[1] +"-"+
+        date[0];
 
         return dateFinal;
     }
@@ -291,8 +353,21 @@ class CustomCalendar extends React.Component {
         return new Date(y,m,0).getDate();
     }
 
-    componentDidUpdate(){
-        this.createPlanning();
+    componentDidUpdate(prevProps){
+        if(prevProps.taskReducer.taskList !== this.props.taskReducer.taskList){
+            this.createPlanning();
+            this.createMarkedDateArray();
+        }
+    }
+
+    createMarkedDateArray(){
+        for(let date in this.state.agendaTab){
+            if(this.state.agendaTab[date].hasTask){
+                this.state.markedDates[date] = {marked: true};
+            }
+        }
+        console.log(this.state.markedDates);
+        this.setState({markedDates:this.state.markedDates})
     }
 
     render() {
@@ -328,16 +403,8 @@ class CustomCalendar extends React.Component {
             <View style={styles.container}>
                 <Calendar 
                     style={styles.calendar} 
-                    markedDates={{
-                        '2020-06-11': {startingDay: true, color: 'red', endingDay: true},
-
-                        '2020-06-16': {startingDay: true, color: 'green', textColor: 'white'},
-                        '2020-06-17': {color: 'green', textColor: 'white', marked: true, dotColor: 'yellow'},
-                        '2020-06-18': {selected: true, endingDay: true, color: 'green', textColor: 'white'},
-
-                        '2020-06-25': {startingDay: true, color: 'red', endingDay: true}
-                    }}
-                    markingType={'period'}
+                    markedDates={this.state.markedDates}
+                    markingType={'dot'}
                     showWeekNumbers={true}
                     onDayPress={(day) => {console.log('selected day :', day.dateString)}}
                 />
