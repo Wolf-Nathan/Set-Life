@@ -40,7 +40,7 @@ Pour générer la documentation d'un fichier `yarn run react-docgen [path]`
 
 ## Equipe
 
-❯ https://github.com/sckraa
-❯ https://github.com/balzacbdmt
-❯ https://github.com/Wolf-Nathan
-❯ https://github.com/agranger13
+- https://github.com/sckraa
+- https://github.com/balzacbdmt
+- https://github.com/Wolf-Nathan
+- https://github.com/agranger13
