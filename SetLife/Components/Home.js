@@ -51,7 +51,7 @@ class Home extends React.Component {
                                 </TouchableOpacity>
                             )
                         }}
-                        keyExtractor={(item, index)=> index}
+                        keyExtractor={(item, index)=> index.toString()}
                    />
                </View>
            )
