@@ -7,6 +7,11 @@ import RowTask from "./RowTask";
 
 import { stylesTasks } from '../assets/style/stylesheet';
 
+/**
+ * Component for Task list and management.
+ * @class Tasks
+ * @extends {React.Component}
+ */
 class Tasks extends React.Component {
 
     /**
