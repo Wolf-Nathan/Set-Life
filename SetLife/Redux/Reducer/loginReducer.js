@@ -72,7 +72,6 @@ export default function connection(state = initialState, action) {
             };
             users.push(newUser);
             signUpSuccessAction = true;
-            console.log(users);
           }
         }
       }
@@ -87,7 +86,7 @@ export default function connection(state = initialState, action) {
 
     case 'SIGN_OUT':
       nextState = {
-        initialState
+        initialState,
       };
       return nextState;
     default:
