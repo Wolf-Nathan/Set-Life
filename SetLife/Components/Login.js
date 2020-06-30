@@ -41,7 +41,9 @@ class Login extends React.Component {
         // Check login infos here
         let action = {type: "LOG_IN", value: user};
         this.props.dispatch(action);
+    }
 
+    validConnection() {
         if(this.props.loginReducer.logged) {
             this.props.navigation.navigate('Home');
         } 
@@ -115,6 +117,7 @@ class Login extends React.Component {
                     <Text style={stylesLogin.textLogin}>Sign in</Text>
                 </TouchableOpacity>
                 {this.errorConnection()}
+                {this.validConnection()}
             </View>
         )
     }
