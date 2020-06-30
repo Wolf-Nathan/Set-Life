@@ -8,7 +8,16 @@ import {connect} from 'react-redux';
 
 import { stylesLogin } from '../assets/style/stylesheet';
 
+/**
+ * Component for Sign In.
+ * @class Login
+ * @extends {React.Component}
+ */
 class Login extends React.Component {
+    /**
+     * Constructor declaration of the component Login.
+     * @param props
+     */
     constructor(props) {
         super(props)
         this.state = {
@@ -19,6 +28,9 @@ class Login extends React.Component {
         }
     }
 
+    /**
+     * Function to show or hide the password in the input field.
+     */
     showPassword() {
         if(this.state.press === false) {
             this.setState({
@@ -33,6 +45,9 @@ class Login extends React.Component {
         }
     }
 
+    /**
+     * Function that triggers the loginReducer login action and allows a user to log in.
+     */
     signIn() {
         let user = {
             login: this.state.login,
@@ -43,12 +58,18 @@ class Login extends React.Component {
         this.props.dispatch(action);
     }
 
+    /**
+     * Function that redirects the user to the home page if logged in.
+     */
     validConnection() {
         if(this.props.loginReducer.logged) {
             this.props.navigation.navigate('Home');
         } 
     }
 
+    /**
+     * Function that displays errors during connection.
+     */
     errorConnection() {
         if(this.props.loginReducer.emptyFields) {
             return(
@@ -67,18 +88,30 @@ class Login extends React.Component {
         }
     }
 
+    /**
+     * Change login in the state.
+     * @param login 
+     */
     onChangeLogin(login) {
         this.setState({
             login: login
         })
     }
 
+    /**
+     * Change password in the state
+     * @param password 
+     */
     onChangePassword(password) {
         this.setState({
             password: password
         })
     }
 
+    /**
+     * Returns the view of the login form.
+     * @returns {View}
+     */
     render() {
         return(
             <View style={stylesLogin.viewContainer}>
@@ -123,10 +156,17 @@ class Login extends React.Component {
     }
 }
 
+/**
+ * Set reducers in the component.
+ * @param state 
+ */
 const mapStateToProps = state => {
     return {
         loginReducer: state.login
     }
 };
 
+/**
+ * Connect the reducers with the component.
+ */
 export default connect(mapStateToProps)(Login);

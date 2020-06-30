@@ -8,8 +8,16 @@ import {connect} from 'react-redux';
 
 import { stylesRegister } from '../assets/style/stylesheet';
 
+/**
+ * Component for user registration.
+ * @class Register
+ * @extends {React.Component}
+ */
 class Register extends React.Component {
-
+    /**
+     * Constructor declaration of the component register.
+     * @param props 
+     */
     constructor(props) {
         super(props)
         this.state = {
@@ -22,6 +30,9 @@ class Register extends React.Component {
         }
     }
 
+    /**
+     * Function to show or hide the password in the input field.
+     */
     showPassword = () => {
         if(this.state.press === false) {
             this.setState({
@@ -36,6 +47,9 @@ class Register extends React.Component {
         }
     }
 
+    /**
+     * Function that triggers the action of registering a user of loginReducer and allows a user to register.
+     */
     signUp() {
         let newUser = {
             username: this.state.username,
@@ -51,30 +65,49 @@ class Register extends React.Component {
         }
     }
 
+    /**
+     * Change username in the state.
+     * @param username 
+     */
     onChangeUsername(username) {
         this.setState({
             username: username
         })
     }
 
+    /**
+     * Change login in the state.
+     * @param login 
+     */
     onChangeLogin(login) {
         this.setState({
             login: login
         })
     }
 
+    /**
+     * Change password in the state.
+     * @param password 
+     */
     onChangePassword(password) {
         this.setState({
             password: password
         })
     }
 
+    /**
+     * Change confirmPassword in the state.
+     * @param confirmPassword 
+     */
     onChangeConfirmPassword(confirmPassword) {
         this.setState({
             confirmPassword: confirmPassword
         })
     }
 
+    /**
+     * Function that displays errors during register.
+     */
     errorSignUp() {
         if(this.props.loginReducer.emptyFields) {
             return(
@@ -93,6 +126,10 @@ class Register extends React.Component {
         }
     }
 
+    /**
+     * Returns the view of the register form.
+     * @returns {View}
+     */
     render() {
         return(
             <View style={stylesRegister.viewContainer}>
@@ -162,10 +199,17 @@ class Register extends React.Component {
     }
 }
 
+/**
+ * Set reducers in the component.
+ * @param state 
+ */
 const mapStateToProps = state => {
     return {
         loginReducer: state.login
     }
 }
 
+/**
+ * Connect the reducers with the component.
+ */
 export default connect(mapStateToProps)(Register);

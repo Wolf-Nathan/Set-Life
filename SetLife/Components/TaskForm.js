@@ -10,7 +10,7 @@ import { stylesTaskForm } from '../assets/style/stylesheet';
 /**
  * Component for Task Form.
  * @class TaskForm
- * @extends {Component}
+ * @extends {React.Component}
  */
 class TaskForm extends React.Component {
     /**
@@ -529,10 +529,17 @@ class TaskForm extends React.Component {
     }
 }
 
+/**
+ * Set reducers in the component.
+ * @param state 
+ */
 const mapStateToProps = state => {
     return {
         taskReducer: state.task
     }
 };
 
+/**
+ * Connect the reducers with the component/
+ */
 export default connect(mapStateToProps)(TaskForm);

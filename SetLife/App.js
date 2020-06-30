@@ -8,8 +8,15 @@ import logoGreen from './assets/images/logo_green_500.png';
 
 import {stylesApp} from './assets/style/stylesheet';
 
+/**
+ * @class App
+ * @extends {React.Component}
+ */
 export default class App extends Component {
-
+  /**
+   * Constructor declaration of the component App.
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +24,10 @@ export default class App extends Component {
     }    
   }
 
+  /**
+   * Import text fonts into the application.
+   * @async
+   */
   async componentDidMount() {
       await Font.loadAsync({
         Montserrat: require('./assets/fonts/Montserrat.ttf')
@@ -24,8 +35,11 @@ export default class App extends Component {
       this.setState({ assetsLoaded: true });
   }
 
+  /**
+   * Return the navigation or view.
+   * @returns {Provider|View}
+   */
   render() {
-    
     if (this.state.assetsLoaded) {
       return (
         <Provider store={Store}>
