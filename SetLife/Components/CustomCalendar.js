@@ -456,7 +456,7 @@ class CustomCalendar extends React.Component {
                     onDayPress={(day) => {this.getTaskOfTheDay(day.dateString)}}
                 />
                 {
-                    this.state.taskOfTheDay .length ?
+                    this.state.taskOfTheDay.length ?
                         <View>
                             <Text style={styles.dayProgramText}>Your day program</Text>
                             <FlatList

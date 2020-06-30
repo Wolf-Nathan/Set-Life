@@ -141,7 +141,7 @@ class Register extends React.Component {
                 <View style={stylesRegister.formContainer}>
                     <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
                     <TextInput 
-                        placeholder={'Username'}
+                        placeholder={'Name'}
                         placeholderTextColor={'#344644'}
                         underlineColorAndroid='transparent'
                         style={stylesRegister.input}
