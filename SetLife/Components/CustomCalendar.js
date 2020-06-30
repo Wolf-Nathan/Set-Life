@@ -13,7 +13,8 @@ class CustomCalendar extends React.Component {
         super(props);
         this.state = {
             agendaTab : {},
-            markedDates : {}
+            markedDates : {},
+            taskOfTheDay : []
         }
     }
 
@@ -27,17 +28,19 @@ class CustomCalendar extends React.Component {
 
         for(let i = 0; i < sortedTasks.length; i++) {
             let taskI = sortedTasks[i].task;
-            console.log(taskI.name);
+            //console.log(taskI.name);
             let dateTask = this.changeDateFormat(taskI.date.substr(0,10));
             this.state.agendaTab = this.assignTaskToAgenda(this.state.agendaTab,taskI,dateTask);
         }
 
-        console.log(this.state.agendaTab[Object.keys(this.state.agendaTab)[29]]);
+        //console.log(this.state.agendaTab[Object.keys(this.state.agendaTab)[29]]);
         //console.log(this.props.settings);
     }
 
+    /*
+     * Assign a time in the agenda table
+     */
     assignTaskToAgenda(agendaTab,taskI,dateTask){
-        console.log("1")
         if(agendaTab[dateTask] === undefined){
             return agendaTab;
         }
@@ -79,7 +82,7 @@ class CustomCalendar extends React.Component {
                 if(i%5 === 0 && i !== 0){
                     changeHourAndDate();
                 }
-                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI.id);
+                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI);
             }
             agendaTab[dateTask].hasTask=true;
         }else{
@@ -87,7 +90,7 @@ class CustomCalendar extends React.Component {
                 quarterStart++;
                 if(quarterStart > 4){
                     quarterStart = quarterStart%5;
-                    changeHourAndDate();
+                    changeHourAndDate(); 
                 }
             }
 
@@ -95,7 +98,7 @@ class CustomCalendar extends React.Component {
                 if(i%5 === 0 && i !== 0){
                     changeHourAndDate();
                 }
-                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI.id);
+                agendaTab[dateTask][timeAttribute]["quarter"+(i%5)].push(taskI);
             }
             agendaTab[dateTask].hasTask=true;
 
@@ -103,20 +106,20 @@ class CustomCalendar extends React.Component {
 
         if(taskI.type === "recurrent"){
             let date = new Date (dateTask);
-            switch (taskI.recurrenceChoice) {
+            switch (taskI.recurrence) {
                 case "hour":
                     changeHourAndDate();
                     break;
                 case "day":
-                    date.setDate(dare.getDate()+1);
+                    date.setDate(date.getDate()+1);
                     break;
                 case "week":
-                    date.setDate(dare.getDate()+7);
+                    date.setDate(date.getDate()+7);
                     break;
                 case "month":
-                    date.setMonth(dare.getMonth()+1);
+                    date.setMonth(date.getMonth()+1);
                     break;
-                default:
+                default: 
                     break;
             }
 
@@ -125,14 +128,15 @@ class CustomCalendar extends React.Component {
                 +(date.getMonth()+1).toString().padStart(2,'0')+"-"
                 +date.getDate().toString().padStart(2,'0');
 
-            console.log("date task : " + dateTask);
-
             return this.assignTaskToAgenda(agendaTab,taskI, dateTask);
         }
 
         return agendaTab;
     }
 
+    /*
+     * Init vars to determine when day start and end
+     */
     initTaskVars(agendaTab, dateTask, taskI, timeAttribute, quarterStart, timeEndDay){
 
         if(agendaTab[dateTask].work === true && taskI.secondType === "work" ){
@@ -157,6 +161,9 @@ class CustomCalendar extends React.Component {
         return [timeAttribute,quarterStart,timeEndDay];
     }
 
+    /*
+     * Calculate the duration of a task in quarter
+     */
     calculateDurationQuarter(duration){
         let durationHour = duration.substr(0, 2);
         let durationMinute = duration.substr(3);
@@ -261,6 +268,9 @@ class CustomCalendar extends React.Component {
         }
     }
 
+    /*
+     * Generate an agenda table, which will be display in vue
+     */
     determineAgenda(nbMonth){
 
         let now = new Date();
@@ -284,6 +294,9 @@ class CustomCalendar extends React.Component {
         return tabAgenda;
     }
 
+    /*
+     * Generate an object to complete the agenda, it corresponds to a day with differents hours
+     */
     constructDayObject(dateString){
         let startTime;
         let endTime;
@@ -340,6 +353,9 @@ class CustomCalendar extends React.Component {
         return finalObject;
     }
 
+    /*
+     * Change the format of a date "dd/MM/YYYY"
+     */
     changeDateFormat(dateString){
         let date = dateString.split("/");
         let dateFinal = date[2] +"-"+
@@ -349,10 +365,30 @@ class CustomCalendar extends React.Component {
         return dateFinal;
     }
 
+    /*
+     * get the last day of a month
+     */
     lastDayOfMonth(y,m){
         return new Date(y,m,0).getDate();
     }
 
+    /*
+     * When component is mounted, init the agenda and table of scores
+     */
+    componentDidMount(){
+        this.createPlanning();
+        this.createMarkedDateArray();
+
+        let date = new Date();
+        date = date.getFullYear()+"-"
+        +(date.getMonth()+1).toString().padStart(2,'0')+"-"
+        +date.getDate().toString().padStart(2,'0');
+        this.getTaskOfTheDay()
+    }
+
+    /*
+     * When component is updated (agenda), init the agenda and table of scores
+     */
     componentDidUpdate(prevProps){
         if(prevProps.taskReducer.taskList !== this.props.taskReducer.taskList){
             this.createPlanning();
@@ -360,29 +396,40 @@ class CustomCalendar extends React.Component {
         }
     }
 
+    /*
+     * Create the array of all tasks to display on the calendar vue
+     */
     createMarkedDateArray(){
         for(let date in this.state.agendaTab){
             if(this.state.agendaTab[date].hasTask){
                 this.state.markedDates[date] = {marked: true};
             }
         }
-        console.log(this.state.markedDates);
         this.setState({markedDates:this.state.markedDates})
     }
 
-    render() {
-        const date = new Date().toDateString();
-        const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };
-        const listDayTasks = [taskExample, taskExample];
-        var today = new Date();
-        today = today.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0, 10);
-        
-        this.props.taskReducer.taskList.forEach(task => {
-            if (task.date === today) {
-                listDayTasks.push(task);
+    /*
+     * Get the current list of tasks of a day
+     */
+    getTaskOfTheDay(day){
+        let tasks = [];
+        for(let hour in this.state.agendaTab[day]){
+            if(hour !== "work" && hour !== "hasTask"){
+                for(let i = 0; i < 5; i++){
+                    let quarter = this.state.agendaTab[day][hour]["quarter"+i];
+                    for(let j = 0; j < quarter.length; j++){
+                        if(!tasks.includes(quarter[j])){
+                            tasks.push(quarter[j])
+                        }
+                    }
+                }
             }
-        });
-        taskExample.date = today;
+        }
+        this.setState({taskOfTheDay:tasks}) ;    
+    }
+
+    render() {
+        //console.log(date);
 
         // Set language calendar
         LocaleConfig.locales['fr'] = {
@@ -406,14 +453,14 @@ class CustomCalendar extends React.Component {
                     markedDates={this.state.markedDates}
                     markingType={'dot'}
                     showWeekNumbers={true}
-                    onDayPress={(day) => {console.log('selected day :', day.dateString)}}
+                    onDayPress={(day) => {this.getTaskOfTheDay(day.dateString)}}
                 />
                 {
-                    listDayTasks.length ?
+                    this.state.taskOfTheDay .length ?
                         <View>
                             <Text style={styles.dayProgramText}>Your day program</Text>
                             <FlatList
-                                data={listDayTasks}
+                                data={this.state.taskOfTheDay }
                                 renderItem={({ item }) => {
                                     return(
                                         <RowTask item={item} />
