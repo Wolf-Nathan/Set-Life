@@ -4,13 +4,26 @@ import { connect } from 'react-redux';
 
 import { stylesWeekdaySelector } from '../assets/style/stylesheet';
 
+/**
+ * Component to toggle work day into the settings reducer.
+ * @class WeekdaySelector
+ * @extends {Component}
+ */
 class WeekdaySelector extends React.Component {
 
+    /**
+     * Function to toggle day work into the settings reducer.
+     * @param day
+     */
     toggleWeek = (day) => {
         const toggle = { type: "TOGGLE_WORKDAY", value: day }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Render the WeekdaySelector.
+     * @returns {View}
+     */
     render() {
         return (
             <View style={stylesWeekdaySelector.container}>
@@ -40,6 +53,9 @@ class WeekdaySelector extends React.Component {
     }
 }
 
+/**
+ * Function to get settings reducer.
+ */
 const mapStateToProps = state => {
     return { 
         settings: state.settings

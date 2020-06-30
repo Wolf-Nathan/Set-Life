@@ -8,48 +8,97 @@ import { connect } from 'react-redux';
 
 import { stylesSettings } from '../assets/style/stylesheet';
 
+/**
+ * Component to define user preference, import/export and sign out.
+ * @class Settings
+ * @extends {Component}
+ */
 class Settings extends React.Component {
 
+    /**
+     * Function to toggle wake up time during week.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWakeupWeek = (newValue) => {
         const toggle = { type: "TOGGLE_WAKEUPWEEK", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Function to toggle wake up time during week-end.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWakeupWeekend = (newValue) => {
         const toggle = { type: "TOGGLE_WAKEUPWEEKEND", value: newValue }
         this.props.dispatch(toggle);
     }
     
+    /**
+     * Function to toggle bed time during week.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleBedtimeWeek = (newValue) => {
         const toggle = { type: "TOGGLE_BEDTIMEWEEK", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Function to toggle bed time during week-end.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleBedtimeWeekend = (newValue) => {
         const toggle = { type: "TOGGLE_BEDTIMEWEEKEND", value: newValue }
         this.props.dispatch(toggle);
     }
-
+    
+    /**
+     * Function to toggle work morning start time.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWorkMorningStart = (newValue) => {
         const toggle = { type: "TOGGLE_WORKMORNINGSTART", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Function to toggle work morning end time.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWorkMorningEnd = (newValue) => {
         const toggle = { type: "TOGGLE_WORKMORNINGEND", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Function to toggle work afternoon start time.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWorkAfternoonStart = (newValue) => {
         const toggle = { type: "TOGGLE_WORKAFTERNOONSTART", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Function to toggle work afternoon end time.
+     * This method call settings reducer.
+     * @param newValue
+     */
     toggleWorkAfternoonEnd = (newValue) => {
         const toggle = { type: "TOGGLE_WORKAFTERNOONEND", value: newValue }
         this.props.dispatch(toggle);
     }
 
+    /**
+     * Render the Settings component for edit preference, import/export or sign out.
+     * @returns {View}
+     */
     render() {
         return (
             <View style={stylesSettings.container}>
@@ -271,6 +320,9 @@ class Settings extends React.Component {
     }
 }
 
+/**
+ * Function to get settings reducer.
+ */
 const mapStateToProps = state => {
     return { 
         settings: state.settings

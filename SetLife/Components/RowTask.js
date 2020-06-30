@@ -18,7 +18,6 @@ export default class RowTask extends React.Component {
      * @returns {View}
      */
     render() {
-        //TODO get infos of task from props and display it.
         const task = this.props.item;
 
         return (

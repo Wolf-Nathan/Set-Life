@@ -6,16 +6,31 @@ import logoGreen from '../assets/images/logo_green_500.png';
 
 import { stylesOpening } from '../assets/style/stylesheet';
 
+/**
+ * Component for Opening view.
+ * @class Login
+ * @extends {Component}
+ */
 class Login extends React.Component {
 
+    /**
+     * Function to open login view.
+     */
     openLoginPage() {
         this.props.navigation.navigate('Login');
     }
 
+    /**
+     * Function to open register view.
+     */
     openRegisterPage() {
         this.props.navigation.navigate('Register');
     }
 
+    /**
+     * Render the Opening view.
+     * @returns {View}
+     */
     render() {
         return(
             <View style={stylesOpening.viewContainer}>
