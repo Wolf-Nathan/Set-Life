@@ -1,4 +1,9 @@
-![illus](https://github.com/Wolf-Nathan/Set-Life/blob/master/SetLife/assets/images/logo_green_500.png)
+![illus](https://github.com/Wolf-Nathan/Set-Life/blob/master/SetLife/assets/images/logo_green_500.png#logo)
+
+img[src*='#logo']{ 
+  width: 15em;
+  margin: auto;
+}
 
 # Set-Life
 
