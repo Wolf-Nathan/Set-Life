@@ -451,40 +451,50 @@ export const stylesWeekdaySelector = StyleSheet.create({
 export const stylesNewsDetails = StyleSheet.create({
   container: {
     backgroundColor: '#F2F2F2',
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
+    marginTop: Constants.statusBarHeight + 50,
+    paddingLeft: 25,
+    paddingRight: 25,
   },
-  helloText: {
-    fontFamily: 'Montserrat',
-    color: '#344644',
-    fontSize: 30,
-    textAlign: 'center',
+  goBack: {
+    zIndex: 1,
+    position: 'absolute',
+    top: Constants.statusBarHeight,
+    left: 5,
   },
-  dateText: {
-    fontFamily: 'Montserrat',
-    color: '#77897F',
-    fontSize: 24,
-    textAlign: 'center',
-  },
-  dayProgramText: {
-    fontFamily: 'Montserrat',
-    color: '#77897F',
-    fontSize: 22,
-    marginLeft: 10,
-  },
-  dayOffContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  freeDayText: {
-    fontFamily: 'Montserrat',
-    color: '#1B5044',
-    fontSize: 26,
-  },
-  freeDayLabel: {
+  title: {
     fontFamily: 'Montserrat',
     color: '#344644',
     fontSize: 24,
+    margin: 5,
+    textAlign: 'center',
+  },
+  content: {
+    fontFamily: 'Montserrat',
+    color: '#000',
+    fontSize: 20,
+  },
+  date: {
+    fontFamily: 'Montserrat',
+    color: '#77897F',
+    fontSize: 16,
+  },
+  seeMore: {
+    backgroundColor: '#1B5044',
+    alignSelf: 'center',
+    borderRadius: 10,
+    paddingLeft: 30,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingRight: 30,
+    margin: 20,
+  },
+  seeMoreText: {
+    fontFamily: 'Montserrat',
+    color: '#fff',
+    fontSize: 16,
+  },
+  picture: {
+    alignSelf: 'center',
+    margin: 25,
   },
 });
