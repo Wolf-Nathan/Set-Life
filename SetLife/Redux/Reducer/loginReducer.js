@@ -85,6 +85,11 @@ export default function connection(state = initialState, action) {
       };
       return nextState;
 
+    case 'SIGN_OUT':
+      nextState = {
+        initialState
+      };
+      return nextState;
     default:
       return state;
   }

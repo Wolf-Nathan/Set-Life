@@ -95,6 +95,12 @@ class Settings extends React.Component {
         this.props.dispatch(toggle);
     }
 
+    signOut() {
+        let action = {type: "SIGN_OUT"};
+        this.props.dispatch(action);
+        this.props.navigation.navigate('Opening');
+    }
+
     /**
      * Render the Settings component for edit preference, import/export or sign out.
      * @returns {View}
@@ -312,7 +318,7 @@ class Settings extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <TouchableOpacity style={[stylesSettings.button, stylesSettings.buttonDisconnect]}>
+                <TouchableOpacity style={[stylesSettings.button, stylesSettings.buttonDisconnect]} onPress={() => this.signOut()}>
                     <Text style={stylesSettings.buttonText}>Sign out</Text>
                 </TouchableOpacity>
             </View>
@@ -325,7 +331,8 @@ class Settings extends React.Component {
  */
 const mapStateToProps = state => {
     return { 
-        settings: state.settings
+        settings: state.settings,
+        loginReducer: state.login
     }
 };
 
