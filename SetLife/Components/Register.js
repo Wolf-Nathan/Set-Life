@@ -78,17 +78,17 @@ class Register extends React.Component {
     errorSignUp() {
         if(this.props.loginReducer.emptyFields) {
             return(
-                <Text style={ {marginTop: 50} }>Veuillez renseigner tous les champs.</Text>
+                <Text style={ {marginTop: 50} }>Please complete all fields.</Text>
             );
         }
         if(this.props.loginReducer.loginUsed) {
             return(
-                <Text style={ {marginTop: 50} }>Le login est déjà pris.</Text>
+                <Text style={ {marginTop: 50} }>The login is already used.</Text>
             );
         }
         if(!this.props.loginReducer.confirmPassword) {
             return(
-                <Text style={ {marginTop: 50} }>Les mots de passe ne correspondent pas.</Text>
+                <Text style={ {marginTop: 50} }>The passwords don't match.</Text>
             );
         }
     }
