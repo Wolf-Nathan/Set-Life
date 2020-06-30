@@ -65,7 +65,7 @@ class Home extends React.Component {
     render() {
         const date = new Date().toDateString();
         const taskExample = { name: "Meal", startHour: "07:45", type: "recurrent", recurrence: "day", endHour: "8:30" };
-        const listDayTasks = [taskExample, taskExample];
+        const listDayTasks = [];
         let i = 0;
         var today = new Date();
         today = today.toLocaleString('en-GB', { timeZone: 'UTC' }).substr(0, 10);
