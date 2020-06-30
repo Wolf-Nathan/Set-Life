@@ -20,7 +20,7 @@
 
 ### SetLife est prêt a être utilisé !
 
-Scannez le QR-Code avec l'application Expo pour commencera utilisé SetLife.
+Scannez le QR-Code avec l'application Expo pour commencer à utiliser SetLife.
 
 ## Commandes de base
 
