@@ -14,6 +14,7 @@
 
 ```
 ❯ cd .\SetLife\
+❯ yarn install
 ❯ yarn start
 ```
 
