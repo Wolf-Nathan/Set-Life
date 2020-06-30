@@ -48,7 +48,8 @@ class TaskForm extends React.Component {
                     hourChoice: "free",
                     importance: 3,
                     duration: "01:00",
-                    recurrenceChoice: "day"
+                    recurrenceChoice: "day",
+                    taskName: ""
                 }
             }
         }
@@ -60,7 +61,8 @@ class TaskForm extends React.Component {
                 hourChoice: "free",
                 importance: 3,
                 duration: "01:00",
-                recurrenceChoice: "day"
+                recurrenceChoice: "day",
+                taskName: ""
 
             }
         }

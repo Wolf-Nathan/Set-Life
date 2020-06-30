@@ -399,6 +399,11 @@ export const stylesTaskForm = StyleSheet.create({
 
 // Tasks
 export const stylesTasks = StyleSheet.create({
+  container: {
+    backgroundColor: '#F2F2F2',
+    flex: 1,
+    paddingTop: Constants.statusBarHeight + 10,
+  },
   button: {
     backgroundColor: '#1B5044',
     borderRadius: 15,
@@ -406,8 +411,22 @@ export const stylesTasks = StyleSheet.create({
     width: 150,
     margin: 5,
     alignSelf: 'center',
+    position: 'absolute',
+    bottom: 10,
   },
-  buttonText: {
+  title: {
+    fontFamily: 'Montserrat',
+    color: '#344644',
+    fontSize: 30,
+    textAlign: 'center',
+  },
+  textEmpty: {
+    fontFamily: 'Montserrat',
+    color: '#344644',
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  buttonAdd: {
     fontFamily: 'Montserrat',
     fontSize: 18,
     color: '#F2F2F2',

@@ -8,6 +8,11 @@ import RowTask from './RowTask';
 import {connect} from "react-redux";
 import { Switch } from 'react-native-paper';
 
+/**
+ * Component for Custom Calendar.
+ * @class CustomCalendar
+ * @extends {React.Component}
+ */
 class CustomCalendar extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +23,8 @@ class CustomCalendar extends React.Component {
         }
     }
 
-    /*
+
+    /**
      * Generate the planning with the tasks saved
      */
     createPlanning() {
@@ -37,8 +43,12 @@ class CustomCalendar extends React.Component {
         //console.log(this.props.settings);
     }
 
-    /*
+    /**
      * Assign a time in the agenda table
+     * @param agendaTab
+     * @param taskI
+     * @param dateTask
+     * @returns {*}
      */
     assignTaskToAgenda(agendaTab,taskI,dateTask){
         if(agendaTab[dateTask] === undefined){
@@ -134,8 +144,15 @@ class CustomCalendar extends React.Component {
         return agendaTab;
     }
 
-    /*
+    /**
      * Init vars to determine when day start and end
+     * @param agendaTab
+     * @param dateTask
+     * @param taskI
+     * @param timeAttribute
+     * @param quarterStart
+     * @param timeEndDay
+     * @returns {(string|number)[]}
      */
     initTaskVars(agendaTab, dateTask, taskI, timeAttribute, quarterStart, timeEndDay){
 
@@ -161,8 +178,11 @@ class CustomCalendar extends React.Component {
         return [timeAttribute,quarterStart,timeEndDay];
     }
 
-    /*
-     * Calculate the duration of a task in quarter
+
+    /**
+     * Calculate the duration of a task in quarter.
+     * @param duration
+     * @returns {number}
      */
     calculateDurationQuarter(duration){
         let durationHour = duration.substr(0, 2);
@@ -174,8 +194,11 @@ class CustomCalendar extends React.Component {
         return durationResult;
     }
 
-    /*
-     * Sort the tasks with a score calculated depends on task informations
+
+    /**
+     * Sort the tasks with a score calculated depends on task information.
+     * @param taskList
+     * @returns {[]}
      */
     sortTasks(taskList) {
         let scoringTab = [];
@@ -241,8 +264,12 @@ class CustomCalendar extends React.Component {
         return scoringTab;
     }
 
-    /*
+
+    /**
      * Personalized compare method of tasks
+     * @param a
+     * @param b
+     * @returns {number}
      */
     compareTaskScoring(a,b) {
         if(a.score > b.score){
@@ -268,8 +295,10 @@ class CustomCalendar extends React.Component {
         }
     }
 
-    /*
+    /**
      * Generate an agenda table, which will be display in vue
+     * @param nbMonth
+     * @returns {{}}
      */
     determineAgenda(nbMonth){
 
@@ -294,8 +323,10 @@ class CustomCalendar extends React.Component {
         return tabAgenda;
     }
 
-    /*
-     * Generate an object to complete the agenda, it corresponds to a day with differents hours
+    /**
+     * Generate an object to complete the agenda, it corresponds to a day with different hours
+     * @param dateString
+     * @returns {{hasTask: boolean, work: boolean}}
      */
     constructDayObject(dateString){
         let startTime;
@@ -353,8 +384,10 @@ class CustomCalendar extends React.Component {
         return finalObject;
     }
 
-    /*
-     * Change the format of a date "dd/MM/YYYY"
+    /**
+     * Change the format of a date "dd/MM/YYYY".
+     * @param dateString
+     * @returns {string}
      */
     changeDateFormat(dateString){
         let date = dateString.split("/");
@@ -365,15 +398,18 @@ class CustomCalendar extends React.Component {
         return dateFinal;
     }
 
-    /*
-     * get the last day of a month
+    /**
+     * Get the last day of a month.
+     * @param y
+     * @param m
+     * @returns {number}
      */
     lastDayOfMonth(y,m){
         return new Date(y,m,0).getDate();
     }
 
-    /*
-     * When component is mounted, init the agenda and table of scores
+    /**
+     * When component is mounted, init the agenda and table of scores.
      */
     componentDidMount(){
         this.createPlanning();
@@ -386,8 +422,9 @@ class CustomCalendar extends React.Component {
         this.getTaskOfTheDay()
     }
 
-    /*
-     * When component is updated (agenda), init the agenda and table of scores
+    /**
+     * When component is updated (agenda), init the agenda and table of scores.
+     * @param prevProps
      */
     componentDidUpdate(prevProps){
         if(prevProps.taskReducer.taskList !== this.props.taskReducer.taskList){
@@ -396,8 +433,8 @@ class CustomCalendar extends React.Component {
         }
     }
 
-    /*
-     * Create the array of all tasks to display on the calendar vue
+    /**
+     * Create the array of all tasks to display on the calendar vue.
      */
     createMarkedDateArray(){
         for(let date in this.state.agendaTab){
@@ -408,8 +445,9 @@ class CustomCalendar extends React.Component {
         this.setState({markedDates:this.state.markedDates})
     }
 
-    /*
+    /**
      * Get the current list of tasks of a day
+     * @param day
      */
     getTaskOfTheDay(day){
         let tasks = [];
@@ -428,6 +466,10 @@ class CustomCalendar extends React.Component {
         this.setState({taskOfTheDay:tasks}) ;    
     }
 
+    /**
+     * Render View of CustomCalendar component.
+     * @returns {View}
+     */
     render() {
         //console.log(date);
 

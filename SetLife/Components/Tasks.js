@@ -7,6 +7,11 @@ import RowTask from "./RowTask";
 
 import { stylesTasks } from '../assets/style/stylesheet';
 
+/**
+ * Component for Task list and management.
+ * @class Tasks
+ * @extends {React.Component}
+ */
 class Tasks extends React.Component {
 
     /**
@@ -32,7 +37,7 @@ class Tasks extends React.Component {
             )
         } else {
             return (
-                <Text>You have no task !</Text>
+                <Text style={stylesTasks.textEmpty}>You have no task !</Text>
             )
         }
     }
@@ -43,11 +48,11 @@ class Tasks extends React.Component {
      */
     render() {
         return (
-            <View>
-                <Text>Your tasks</Text>
+            <View style={stylesTasks.container}>
+                <Text style={stylesTasks.title}>Your tasks</Text>
                 { this.taskList() }
                 <TouchableOpacity style={stylesTasks.button} onPress={() => this.props.navigation.navigate('TaskForm')}>
-                    <Text style={stylesTasks.buttonText}>New Task</Text>
+                    <Text style={stylesTasks.buttonAdd}>New Task</Text>
                 </TouchableOpacity>
             </View>
         )
