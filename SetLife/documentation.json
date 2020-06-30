@@ -1,0 +1,947 @@
+{
+  "Components\\CustomCalendar.js": {
+    "description": "Component for Custom Calendar.\r\n@class CustomCalendar\r\n@extends {React.Component}",
+    "displayName": "CustomCalendar",
+    "methods": [
+      {
+        "name": "createPlanning",
+        "docblock": "Generate the planning with the tasks saved",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Generate the planning with the tasks saved"
+      },
+      {
+        "name": "assignTaskToAgenda",
+        "docblock": "Assign a time in the agenda table\r\n@param agendaTab\r\n@param taskI\r\n@param dateTask\r\n@returns {*}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "agendaTab",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "taskI",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "dateTask",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "mixed"
+          }
+        },
+        "description": "Assign a time in the agenda table"
+      },
+      {
+        "name": "initTaskVars",
+        "docblock": "Init vars to determine when day start and end\r\n@param agendaTab\r\n@param dateTask\r\n@param taskI\r\n@param timeAttribute\r\n@param quarterStart\r\n@param timeEndDay\r\n@returns {(string|number)[]}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "agendaTab",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "dateTask",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "taskI",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "timeAttribute",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "quarterStart",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "timeEndDay",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "Array",
+            "elements": [
+              {
+                "name": "union",
+                "elements": [
+                  {
+                    "name": "string"
+                  },
+                  {
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "description": "Init vars to determine when day start and end"
+      },
+      {
+        "name": "calculateDurationQuarter",
+        "docblock": "Calculate the duration of a task in quarter.\r\n@param duration\r\n@returns {number}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "duration",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "number"
+          }
+        },
+        "description": "Calculate the duration of a task in quarter."
+      },
+      {
+        "name": "sortTasks",
+        "docblock": "Sort the tasks with a score calculated depends on task information.\r\n@param taskList\r\n@returns {[]}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "taskList",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "tuple",
+            "elements": []
+          }
+        },
+        "description": "Sort the tasks with a score calculated depends on task information."
+      },
+      {
+        "name": "compareTaskScoring",
+        "docblock": "Personalized compare method of tasks\r\n@param a\r\n@param b\r\n@returns {number}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "a",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "b",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "number"
+          }
+        },
+        "description": "Personalized compare method of tasks"
+      },
+      {
+        "name": "determineAgenda",
+        "docblock": "Generate an agenda table, which will be display in vue\r\n@param nbMonth\r\n@returns {{}}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "nbMonth",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": null
+        },
+        "description": "Generate an agenda table, which will be display in vue"
+      },
+      {
+        "name": "constructDayObject",
+        "docblock": "Generate an object to complete the agenda, it corresponds to a day with different hours\r\n@param dateString\r\n@returns {{hasTask: boolean, work: boolean}}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "dateString",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": null
+        },
+        "description": "Generate an object to complete the agenda, it corresponds to a day with different hours"
+      },
+      {
+        "name": "changeDateFormat",
+        "docblock": "Change the format of a date \"dd/MM/YYYY\".\r\n@param dateString\r\n@returns {string}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "dateString",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "string"
+          }
+        },
+        "description": "Change the format of a date \"dd/MM/YYYY\"."
+      },
+      {
+        "name": "lastDayOfMonth",
+        "docblock": "Get the last day of a month.\r\n@param y\r\n@param m\r\n@returns {number}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "y",
+            "description": null,
+            "type": null,
+            "optional": false
+          },
+          {
+            "name": "m",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "number"
+          }
+        },
+        "description": "Get the last day of a month."
+      },
+      {
+        "name": "createMarkedDateArray",
+        "docblock": "Create the array of all tasks to display on the calendar vue.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Create the array of all tasks to display on the calendar vue."
+      },
+      {
+        "name": "getTaskOfTheDay",
+        "docblock": "Get the current list of tasks of a day\r\n@param day",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "day",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Get the current list of tasks of a day"
+      }
+    ]
+  },
+  "Components\\Home.js": {
+    "description": "Component for Home view.\r\n@class Home\r\n@extends {Component}",
+    "displayName": "Home",
+    "methods": [
+      {
+        "name": "loadRss",
+        "docblock": "Function to collect data from the Promise get by the Reducer.\r\n@returns {Promise<void>}",
+        "modifiers": [
+          "async"
+        ],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "Promise",
+            "elements": [
+              {
+                "name": "void"
+              }
+            ]
+          }
+        },
+        "description": "Function to collect data from the Promise get by the Reducer."
+      },
+      {
+        "name": "showNews",
+        "docblock": "Show the list of News if there load.\r\n@returns {View|null}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "union",
+            "elements": [
+              {
+                "name": "View"
+              },
+              null
+            ]
+          }
+        },
+        "description": "Show the list of News if there load."
+      }
+    ]
+  },
+  "Components\\Login.js": {
+    "description": "Component for Sign In.\r\n@class Login\r\n@extends {React.Component}",
+    "displayName": "Login",
+    "methods": [
+      {
+        "name": "showPassword",
+        "docblock": "Function to show or hide the password in the input field.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function to show or hide the password in the input field."
+      },
+      {
+        "name": "signIn",
+        "docblock": "Function that triggers the loginReducer login action and allows a user to log in.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function that triggers the loginReducer login action and allows a user to log in."
+      },
+      {
+        "name": "validConnection",
+        "docblock": "Function that redirects the user to the home page if logged in.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function that redirects the user to the home page if logged in."
+      },
+      {
+        "name": "errorConnection",
+        "docblock": "Function that displays errors during connection.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function that displays errors during connection."
+      },
+      {
+        "name": "onChangeLogin",
+        "docblock": "Change login in the state.\r\n@param login",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "login",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change login in the state."
+      },
+      {
+        "name": "onChangePassword",
+        "docblock": "Change password in the state\r\n@param password",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "password",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change password in the state"
+      }
+    ]
+  },
+  "Components\\NewsDetails.js": {
+    "description": "Component to show details of a news.\r\n@class NewsDetails\r\n@extends {Component}",
+    "displayName": "NewsDetails",
+    "methods": []
+  },
+  "Components\\Opening.js": {
+    "description": "Component for Opening view.\r\n@class Login\r\n@extends {Component}",
+    "displayName": "Login",
+    "methods": [
+      {
+        "name": "openLoginPage",
+        "docblock": "Function to open login view.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function to open login view."
+      },
+      {
+        "name": "openRegisterPage",
+        "docblock": "Function to open register view.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function to open register view."
+      }
+    ]
+  },
+  "Components\\Register.js": {
+    "description": "Component for user registration.\r\n@class Register\r\n@extends {React.Component}",
+    "displayName": "Register",
+    "methods": [
+      {
+        "name": "showPassword",
+        "docblock": "Function to show or hide the password in the input field.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function to show or hide the password in the input field."
+      },
+      {
+        "name": "signUp",
+        "docblock": "Function that triggers the action of registering a user of loginReducer and allows a user to register.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function that triggers the action of registering a user of loginReducer and allows a user to register."
+      },
+      {
+        "name": "onChangeUsername",
+        "docblock": "Change username in the state.\r\n@param username",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "username",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change username in the state."
+      },
+      {
+        "name": "onChangeLogin",
+        "docblock": "Change login in the state.\r\n@param login",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "login",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change login in the state."
+      },
+      {
+        "name": "onChangePassword",
+        "docblock": "Change password in the state.\r\n@param password",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "password",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change password in the state."
+      },
+      {
+        "name": "onChangeConfirmPassword",
+        "docblock": "Change confirmPassword in the state.\r\n@param confirmPassword",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "confirmPassword",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change confirmPassword in the state."
+      },
+      {
+        "name": "errorSignUp",
+        "docblock": "Function that displays errors during register.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function that displays errors during register."
+      }
+    ]
+  },
+  "Components\\RowNews.js": {
+    "description": "Component to show News.\r\n@class RowNews\r\n@extends {Component}",
+    "displayName": "RowNews",
+    "methods": []
+  },
+  "Components\\RowTask.js": {
+    "description": "Component to show a Task.\r\n@class RowTask\r\n@extends {Component}",
+    "displayName": "RowTask",
+    "methods": []
+  },
+  "Components\\Settings.js": {
+    "description": "Component to define user preference, import/export and sign out.\r\n@class Settings\r\n@extends {Component}",
+    "displayName": "Settings",
+    "methods": [
+      {
+        "name": "toggleWakeupWeek",
+        "docblock": "Function to toggle wake up time during week.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle wake up time during week.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleWakeupWeekend",
+        "docblock": "Function to toggle wake up time during week-end.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle wake up time during week-end.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleBedtimeWeek",
+        "docblock": "Function to toggle bed time during week.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle bed time during week.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleBedtimeWeekend",
+        "docblock": "Function to toggle bed time during week-end.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle bed time during week-end.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleWorkMorningStart",
+        "docblock": "Function to toggle work morning start time.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle work morning start time.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleWorkMorningEnd",
+        "docblock": "Function to toggle work morning end time.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle work morning end time.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleWorkAfternoonStart",
+        "docblock": "Function to toggle work afternoon start time.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle work afternoon start time.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "toggleWorkAfternoonEnd",
+        "docblock": "Function to toggle work afternoon end time.\r\nThis method call settings reducer.\r\n@param newValue",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "newValue",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle work afternoon end time.\r\nThis method call settings reducer."
+      },
+      {
+        "name": "signOut",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
+      }
+    ]
+  },
+  "Components\\TaskForm.js": {
+    "description": "Component for Task Form.\r\n@class TaskForm\r\n@extends {React.Component}",
+    "displayName": "TaskForm",
+    "methods": [
+      {
+        "name": "cleanForm",
+        "docblock": "Function to make form at default value.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Function to make form at default value."
+      },
+      {
+        "name": "deleteTask",
+        "docblock": "Delete the task from the application data.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Delete the task from the application data."
+      },
+      {
+        "name": "onChangeTaskName",
+        "docblock": "Change taskName in the state.\r\n@param text",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "text",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change taskName in the state."
+      },
+      {
+        "name": "hourChoice",
+        "docblock": "Change hourChoice in the state.\r\n@param text",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "text",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change hourChoice in the state."
+      },
+      {
+        "name": "typeChoice",
+        "docblock": "Change typeChoice in the state.\r\n@param text",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "text",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change typeChoice in the state."
+      },
+      {
+        "name": "secondTypeChoice",
+        "docblock": "Change secondTypeChoice in the state\r\n@param text",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "text",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change secondTypeChoice in the state"
+      },
+      {
+        "name": "recurrenceChoice",
+        "docblock": "Change recurrenceChoice in the state.\r\n@param text",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "text",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change recurrenceChoice in the state."
+      },
+      {
+        "name": "importanceChoice",
+        "docblock": "Change importance in the state.\r\n@param importance",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "importance",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Change importance in the state."
+      },
+      {
+        "name": "dateInput",
+        "docblock": "Return DatePicker view in function of the hourChoice.\r\n@returns {DatePicker}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "DatePicker"
+          }
+        },
+        "description": "Return DatePicker view in function of the hourChoice."
+      },
+      {
+        "name": "recurrence",
+        "docblock": "Return choice of recurrence View if type selected is recurrent.\r\n@returns {View|null}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "union",
+            "elements": [
+              {
+                "name": "View"
+              },
+              null
+            ]
+          }
+        },
+        "description": "Return choice of recurrence View if type selected is recurrent."
+      },
+      {
+        "name": "convertTimer",
+        "docblock": "Add a 0 before a string if he has one character to make it Hour format.\r\n@param value\r\n@returns {string|*}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "value",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "union",
+            "elements": [
+              {
+                "name": "string"
+              },
+              {
+                "name": "mixed"
+              }
+            ]
+          }
+        },
+        "description": "Add a 0 before a string if he has one character to make it Hour format."
+      },
+      {
+        "name": "dataToTask",
+        "docblock": "Get data from the state to the task\r\n@returns {{date, recurrence: (null|*|null), duration, hourChoice, endHour: null, startHour: (string|null), importance, name: string, type, secondType}}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": null
+        },
+        "description": "Get data from the state to the task"
+      },
+      {
+        "name": "errorName",
+        "docblock": "Return an error message if user click on save and don't write a task name.\r\n@returns {Text}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "Text"
+          }
+        },
+        "description": "Return an error message if user click on save and don't write a task name."
+      },
+      {
+        "name": "correctForm",
+        "docblock": "Valid the form data.\r\n@returns {boolean}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "boolean"
+          }
+        },
+        "description": "Valid the form data."
+      },
+      {
+        "name": "save",
+        "docblock": "Make action with the taskReducer to save or update the task\r\nin function of the situation, then return to Tasks View.",
+        "modifiers": [],
+        "params": [],
+        "returns": null,
+        "description": "Make action with the taskReducer to save or update the task\r\nin function of the situation, then return to Tasks View."
+      },
+      {
+        "name": "getTask",
+        "docblock": "Get a task in the list by his id.\r\n@param taskId\r\n@returns {int|null}",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "taskId",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "union",
+            "elements": [
+              {
+                "name": "int"
+              },
+              null
+            ]
+          }
+        },
+        "description": "Get a task in the list by his id."
+      }
+    ]
+  },
+  "Components\\Tasks.js": {
+    "description": "Component for Task list and management.\r\n@class Tasks\r\n@extends {React.Component}",
+    "displayName": "Tasks",
+    "methods": [
+      {
+        "name": "taskList",
+        "docblock": "Return the list of tasks or a message if there is no task.\r\n@returns {View|Text}",
+        "modifiers": [],
+        "params": [],
+        "returns": {
+          "description": null,
+          "type": {
+            "name": "union",
+            "elements": [
+              {
+                "name": "View"
+              },
+              {
+                "name": "Text"
+              }
+            ]
+          }
+        },
+        "description": "Return the list of tasks or a message if there is no task."
+      }
+    ]
+  },
+  "Components\\WeekdaySelector.js": {
+    "description": "Component to toggle work day into the settings reducer.\r\n@class WeekdaySelector\r\n@extends {Component}",
+    "displayName": "WeekdaySelector",
+    "methods": [
+      {
+        "name": "toggleWeek",
+        "docblock": "Function to toggle day work into the settings reducer.\r\n@param day",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "day",
+            "description": null,
+            "type": null,
+            "optional": false
+          }
+        ],
+        "returns": null,
+        "description": "Function to toggle day work into the settings reducer."
+      }
+    ]
+  }
+}
