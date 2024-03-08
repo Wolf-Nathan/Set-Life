@@ -124,7 +124,7 @@ class Login extends React.Component {
                 </View>
 
                 <View style={stylesLogin.formContainer}>
-                    <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
+                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
                     <TextInput 
                         placeholder={'Username'}
                         placeholderTextColor={'#344644'}
@@ -135,7 +135,7 @@ class Login extends React.Component {
                 </View>
 
                 <View style={stylesLogin.formContainer}>
-                    <Icon name={'ios-lock'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
+                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
                     <TextInput 
                         placeholder={'Password'}
                         placeholderTextColor={'#344644'}
@@ -145,7 +145,7 @@ class Login extends React.Component {
                         onChangeText={(password) => this.onChangePassword(password)}
                     />
                     <TouchableOpacity style={stylesLogin.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
+                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
                     </TouchableOpacity>
                 </View>
 

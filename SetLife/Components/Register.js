@@ -139,7 +139,7 @@ class Register extends React.Component {
                 </View>
 
                 <View style={stylesRegister.formContainer}>
-                    <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
+                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
                     <TextInput 
                         placeholder={'Name'}
                         placeholderTextColor={'#344644'}
@@ -150,7 +150,7 @@ class Register extends React.Component {
                 </View>
 
                 <View style={stylesRegister.formContainer}>
-                    <Icon name={'ios-person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
+                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
                     <TextInput 
                         placeholder={'Login'}
                         placeholderTextColor={'#344644'}
@@ -161,7 +161,7 @@ class Register extends React.Component {
                 </View>
 
                 <View style={stylesRegister.formContainer}>
-                    <Icon name={'ios-lock'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
+                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
                     <TextInput 
                         placeholder={'Password'}
                         placeholderTextColor={'#344644'}
@@ -171,12 +171,12 @@ class Register extends React.Component {
                         onChangeText={(password) => this.onChangePassword(password)}
                     />
                     <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
+                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
                     </TouchableOpacity>
                 </View>
 
                 <View style={stylesRegister.formContainer}>
-                    <Icon name={'ios-lock'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
+                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
                     <TextInput 
                         placeholder={'Password confirmation'}
                         placeholderTextColor={'#344644'}
@@ -186,7 +186,7 @@ class Register extends React.Component {
                         onChangeText={(confirmPassword) => this.onChangeConfirmPassword(confirmPassword)}
                     />
                     <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'ios-eye' : 'ios-eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
+                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
                     </TouchableOpacity>
                 </View>
 
