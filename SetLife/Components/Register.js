@@ -1,7 +1,7 @@
 // Components/Register.js
 
 import React from 'react';
-import {Text, View, Image, TextInput, TouchableOpacity} from "react-native";
+import {Keyboard, Text, View, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback} from "react-native";
 import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
@@ -135,71 +135,79 @@ class Register extends React.Component {
      */
     render() {
         return(
-            <View style={stylesRegister.viewContainer}>
-                <View style={stylesRegister.logoContainer}>
-                    <TouchableOpacity onPress={() => this.returnOpening()}>
-                        <Image source={logoGreen} style={stylesRegister.logo}/>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <View style={stylesRegister.viewContainer}>
+                    <View style={stylesRegister.logoContainer}>
+                        <TouchableOpacity onPress={() => this.returnOpening()}>
+                            <Image source={logoGreen} style={stylesRegister.logo}/>
+                        </TouchableOpacity>
+                        <Text style={stylesRegister.logoText}>Sign up</Text>
+                    </View>
+
+                    <View style={stylesRegister.formContainer}>
+                        <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon}/>
+                        <TextInput
+                            placeholder={'Name'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            style={stylesRegister.input}
+                            onChangeText={(username) => this.onChangeUsername(username)}
+                        />
+                    </View>
+
+                    <View style={stylesRegister.formContainer}>
+                        <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon}/>
+                        <TextInput
+                            placeholder={'Login'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            style={stylesRegister.input}
+                            onChangeText={(login) => this.onChangeLogin(login)}
+                        />
+                    </View>
+
+                    <View style={stylesRegister.formContainer}>
+                        <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'}
+                              style={stylesRegister.inputIcon}/>
+                        <TextInput
+                            placeholder={'Password'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={this.state.showPassword}
+                            style={stylesRegister.input}
+                            onChangeText={(password) => this.onChangePassword(password)}
+                        />
+                        <TouchableOpacity style={stylesRegister.ctaTogglePassword}
+                                          onPress={this.showPassword.bind(this)}>
+                            <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'}
+                                  size={26}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={stylesRegister.formContainer}>
+                        <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'}
+                              style={stylesRegister.inputIcon}/>
+                        <TextInput
+                            placeholder={'Password confirmation'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={this.state.showPassword}
+                            style={stylesRegister.input}
+                            onChangeText={(confirmPassword) => this.onChangeConfirmPassword(confirmPassword)}
+                        />
+                        <TouchableOpacity style={stylesRegister.ctaTogglePassword}
+                                          onPress={this.showPassword.bind(this)}>
+                            <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'}
+                                  size={26}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity style={stylesRegister.ctaLogin}>
+                        <Text style={stylesRegister.textLogin} onPress={() => this.signUp()}>Sign up</Text>
                     </TouchableOpacity>
-                    <Text style={stylesRegister.logoText}>Sign up</Text>
+                    {this.errorSignUp()}
                 </View>
-
-                <View style={stylesRegister.formContainer}>
-                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
-                    <TextInput 
-                        placeholder={'Name'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        style={stylesRegister.input}
-                        onChangeText={(username) => this.onChangeUsername(username)}
-                    />
-                </View>
-
-                <View style={stylesRegister.formContainer}>
-                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
-                    <TextInput 
-                        placeholder={'Login'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        style={stylesRegister.input}
-                        onChangeText={(login) => this.onChangeLogin(login)}
-                    />
-                </View>
-
-                <View style={stylesRegister.formContainer}>
-                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
-                    <TextInput 
-                        placeholder={'Password'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        secureTextEntry={this.state.showPassword}
-                        style={stylesRegister.input}
-                        onChangeText={(password) => this.onChangePassword(password)}
-                    />
-                    <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
-                    </TouchableOpacity>
-                </View>
-
-                <View style={stylesRegister.formContainer}>
-                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesRegister.inputIcon} />
-                    <TextInput 
-                        placeholder={'Password confirmation'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        secureTextEntry={this.state.showPassword}
-                        style={stylesRegister.input}
-                        onChangeText={(confirmPassword) => this.onChangeConfirmPassword(confirmPassword)}
-                    />
-                    <TouchableOpacity style={stylesRegister.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
-                    </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity style={stylesRegister.ctaLogin}>
-                    <Text style={stylesRegister.textLogin} onPress={() => this.signUp()}>Sign up</Text>
-                </TouchableOpacity>
-                {this.errorSignUp()}
-            </View>
+            </TouchableWithoutFeedback>
         )
     }
 }

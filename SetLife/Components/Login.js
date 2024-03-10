@@ -1,7 +1,7 @@
 // Components/Login.js
 
 import React from 'react';
-import {Text, View, Image, TextInput, TouchableOpacity} from "react-native";
+import {Keyboard, Text, View, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback} from "react-native";
 import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
@@ -124,46 +124,50 @@ class Login extends React.Component {
      */
     render() {
         return(
-            <View style={stylesLogin.viewContainer}>
-                <View style={stylesLogin.logoContainer}>
-                    <TouchableOpacity onPress={() => this.returnOpening()}>
-                        <Image source={logoGreen} style={stylesLogin.logo}/>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <View style={stylesLogin.viewContainer}>
+                    <View style={stylesLogin.logoContainer}>
+                        <TouchableOpacity onPress={() => this.returnOpening()}>
+                            <Image source={logoGreen} style={stylesLogin.logo}/>
+                        </TouchableOpacity>
+                        <Text style={stylesLogin.logoText}>Sign in</Text>
+                    </View>
+
+                    <View style={stylesLogin.formContainer}>
+                        <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon}/>
+                        <TextInput
+                            placeholder={'Username'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            style={stylesLogin.input}
+                            onChangeText={(login) => this.onChangeLogin(login)}
+                        />
+                    </View>
+
+                    <View style={stylesLogin.formContainer}>
+                        <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'}
+                              style={stylesLogin.inputIcon}/>
+                        <TextInput
+                            placeholder={'Password'}
+                            placeholderTextColor={'#344644'}
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={this.state.showPassword}
+                            style={stylesLogin.input}
+                            onChangeText={(password) => this.onChangePassword(password)}
+                        />
+                        <TouchableOpacity style={stylesLogin.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
+                            <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'}
+                                  size={26}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity style={stylesLogin.ctaLogin} onPress={() => this.signIn()}>
+                        <Text style={stylesLogin.textLogin}>Sign in</Text>
                     </TouchableOpacity>
-                    <Text style={stylesLogin.logoText}>Sign in</Text>
+                    {this.errorConnection()}
+                    {this.validConnection()}
                 </View>
-
-                <View style={stylesLogin.formContainer}>
-                    <Icon name={'person'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
-                    <TextInput 
-                        placeholder={'Username'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        style={stylesLogin.input}
-                        onChangeText={(login) => this.onChangeLogin(login)}
-                    />
-                </View>
-
-                <View style={stylesLogin.formContainer}>
-                    <Icon name={'lock-closed-outline'} size={28} color={'rgba(0, 0, 0, 0.7)'} style={stylesLogin.inputIcon} />
-                    <TextInput 
-                        placeholder={'Password'}
-                        placeholderTextColor={'#344644'}
-                        underlineColorAndroid='transparent'
-                        secureTextEntry={this.state.showPassword}
-                        style={stylesLogin.input}
-                        onChangeText={(password) => this.onChangePassword(password)}
-                    />
-                    <TouchableOpacity style={stylesLogin.ctaTogglePassword} onPress={this.showPassword.bind(this)}>
-                        <Icon name={this.state.press === false ? 'eye' : 'eye-off'} color={'rgba(0, 0, 0, 0.7)'} size={26} />
-                    </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity style={stylesLogin.ctaLogin} onPress={() => this.signIn()}>
-                    <Text style={stylesLogin.textLogin}>Sign in</Text>
-                </TouchableOpacity>
-                {this.errorConnection()}
-                {this.validConnection()}
-            </View>
+            </TouchableWithoutFeedback>
         )
     }
 }
