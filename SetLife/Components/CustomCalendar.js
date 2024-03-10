@@ -329,49 +329,30 @@ class CustomCalendar extends React.Component {
      * @returns {{hasTask: boolean, work: boolean}}
      */
     constructDayObject(dateString){
+        let settings = this.props.settings;
+        let workday = settings.workday;
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
         let startTime;
         let endTime;
         let durationDay;
 
-        let work = false;
         let date = new Date(dateString);
-        switch(date.getDay()){
-            case 0 : 
-                work = this.props.settings.workday.sunday;
-                break;
-            case 1 : 
-                work = this.props.settings.workday.monday;
-                break;
-            case 2 : 
-                work = this.props.settings.workday.tuesday;
-                break;
-            case 3 : 
-                work = this.props.settings.workday.wednesday;
-                break;
-            case 4 : 
-                work = this.props.settings.workday.thursday;
-                break;
-            case 5 : 
-                work = this.props.settings.workday.friday;
-                break;
-            case 6 : 
-                work = this.props.settings.workday.saturday;
-                break;
-            default :
-                console.log("unknown day : " + date.getDay());
-        }
+
+        // Boolean who get if current date is a work date or not.
+        let work = settings.workday[days[date.getDay()]];
 
         if (work === true){
-            startTime = this.props.settings.wakeupWeek;
-            endTime = this.props.settings.bedtimeWeek;
+            startTime = this.props.settings.wakeupWeek?.getHours();
+            endTime = this.props.settings.bedtimeWeek?.getHours();
         }else {
-            startTime = this.props.settings.wakeupWeekend;
-            endTime = this.props.settings.bedtimeWeekend;
+            startTime = this.props.settings.wakeupWeekend.getHours();
+            endTime = this.props.settings.bedtimeWeekend.getHours();
         }
 
-        durationDay = Number(endTime.substr(0, 2)) - Number(startTime.substr(0, 2));
+        durationDay = endTime - startTime;
         let finalObject = {work : work, hasTask : false};
-        for(let i = Number(startTime.substr(0, 2)); i <= Number(endTime.substr(0, 2)); i++){
+        for(let i = startTime; i <= endTime; i++){
             finalObject[i.toString().padStart(2,'0')] = {
                 quarter0 : [],
                 quarter1 : [],
