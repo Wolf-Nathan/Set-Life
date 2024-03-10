@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Dimensions} from 'react-native';
-import DatePicker from 'react-native-datepicker';
+import DatePicker from '@react-native-community/datetimepicker';
 import {connect} from 'react-redux';
 
 import { stylesTaskForm } from '../assets/style/stylesheet';
@@ -20,18 +20,18 @@ class TaskForm extends React.Component {
         super(props);
         const taskId = this.props.route.params ? this.props.route.params.taskId : null;
         let now = new Date();
-        let nowDate = now.getDate().toString().padStart(2,'0') +"/"+
-            (now.getMonth() +1 ).toString().padStart(2,'0') +"/"+
-            now.getFullYear();
-        let nowHours = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
-        let dateDefault = nowDate + " " + nowHours;
+        let taskDate = new Date();
         if(taskId) {
             let task = this.getTask(taskId);
             if (task) {
+                taskDate = new Date(task.date);
+                if (task.hourChoice === "fix") {
+                    taskDate.setHours(task.startHour);
+                }
                 this.state = {
                     taskId: taskId,
                     taskName: task.name,
-                    date: task.hourChoice === "fix" ? task.date + " " + task.startHour : task.date,
+                    date: taskDate,
                     typeChoice: task.type,
                     secondTypeChoice: task.secondType,
                     recurrenceChoice: task.type === "recurrent" ? task.recurrence : null,
@@ -44,10 +44,10 @@ class TaskForm extends React.Component {
                 this.state = {
                     typeChoice: "date",
                     secondTypeChoice: "freeTime",
-                    date: dateDefault,
+                    date: now,
                     hourChoice: "free",
                     importance: 3,
-                    duration: "01:00",
+                    duration: new Date(),
                     recurrenceChoice: "day",
                     taskName: ""
                 }
@@ -57,10 +57,10 @@ class TaskForm extends React.Component {
             this.state = {
                 typeChoice: "date",
                 secondTypeChoice: "freeTime",
-                date: dateDefault,
+                date: now,
                 hourChoice: "free",
                 importance: 3,
-                duration: "01:00",
+                duration: new Date(),
                 recurrenceChoice: "day",
                 taskName: ""
 
@@ -156,7 +156,7 @@ class TaskForm extends React.Component {
             return (
                 <DatePicker
                     style={stylesTaskForm.input}
-                    date={this.state.date}
+                    value={this.state.date}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     mode="datetime"
@@ -179,7 +179,7 @@ class TaskForm extends React.Component {
             return (
                 <DatePicker
                     style={stylesTaskForm.input}
-                    date={this.state.date}
+                    value={this.state.date}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     mode="date"
@@ -264,22 +264,22 @@ class TaskForm extends React.Component {
     dataToTask() {
         let task = {
             name: this.state.taskName,
-            date: this.state.date.substr(0, 10),
+            date: this.state.date,
             type: this.state.typeChoice,
             secondType: this.state.secondTypeChoice,
             recurrence: this.state.typeChoice === 'recurrent' ? this.state.recurrenceChoice : null,
             hourChoice: this.state.hourChoice,
-            startHour: this.state.hourChoice === "fix" ? this.state.date.substr(11) : null,
+            startHour: this.state.hourChoice === "fix" ? this.state.date.getHours() : null,
             importance: this.state.importance,
             duration: this.state.duration,
             endHour: null
         };
         // Calculate endHour if the hour is fix.
         if (task.hourChoice === "fix") {
-            let startHour = task.startHour.substr(0,2);
-            let durationHour = task.duration.substr(0, 2);
-            let startMinute = task.startHour.substr(3);
-            let durationMinute = task.duration.substr(3);
+            let startHour = task.startHour;
+            let durationHour = task.duration;
+            let startMinute = task.startHour;
+            let durationMinute = task.duration;
             if ( startMinute === "00") {
                 let endHour = (parseInt(startHour) + parseInt(durationHour));
                 // If endHour is over 23, the task is over the next day.
@@ -383,6 +383,11 @@ class TaskForm extends React.Component {
                 selectTask = task;
             }
         });
+        let duration = new Date();
+        duration.setHours(0);
+        duration.setMinutes(0);
+        duration.setSeconds(0);
+        selectTask.duration = duration;
         return selectTask;
     }
 
@@ -455,7 +460,6 @@ class TaskForm extends React.Component {
                     <Text style={stylesTaskForm.label}>Duration</Text>
                     <DatePicker
                         style={stylesTaskForm.input}
-                        date={this.state.duration}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         mode="time"

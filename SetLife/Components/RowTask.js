@@ -14,11 +14,35 @@ import { stylesRowTask } from '../assets/style/stylesheet';
 export default class RowTask extends React.Component {
 
     /**
+     * Get String version of task date.
+     * @param task
+     * @returns {string}
+     */
+    taskDateToString(task) {
+        if (!task?.date) {
+            return '';
+        }
+
+        let date = task.date;
+
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        let day = days[date.getDay()];
+        let month = months[date.getMonth()];
+
+        return day + " " + date.getDate() + " " + month + " " + date.getFullYear();
+    }
+
+    /**
      * Render the View of RowTask component.
      * @returns {View}
      */
     render() {
         const task = this.props.item;
+        let taskDate = this.taskDateToString(task);
 
         return (
             <View style={stylesRowTask.row}>
@@ -28,7 +52,7 @@ export default class RowTask extends React.Component {
                     </TouchableWithoutFeedback>
                 </View>  
                 <Text style={stylesRowTask.title}>{task.name}</Text>
-                <Text style={stylesRowTask.timeText}>{task.date}{task.startHour ? " " + task.startHour : ""}{task.endHour ? " - " + task.endHour : ""}</Text>
+                <Text style={stylesRowTask.timeText}>{taskDate}</Text>
             </View>
         )
     }
