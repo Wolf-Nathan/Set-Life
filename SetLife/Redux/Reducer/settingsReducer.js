@@ -1,8 +1,22 @@
+/**
+ * @param hours
+ * @param minutes
+ * @param seconds
+ * @returns {Date}
+ */
+let buildDate = function (hours, minutes = 0, seconds = 0) {
+  let date = new Date();
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(seconds);
+  return date;
+};
+
 const INITIAL_STATE = {
-  wakeupWeek: "08:00",
-  wakeupWeekend: "10:00",
-  bedtimeWeek: "22:30",
-  bedtimeWeekend: "23:30",
+  wakeupWeek: buildDate(8),
+  wakeupWeekend: buildDate(9),
+  bedtimeWeek: buildDate(22,30),
+  bedtimeWeekend: buildDate(23,30),
   workday: {
     monday: true,
     tuesday: true,
@@ -12,10 +26,10 @@ const INITIAL_STATE = {
     saturday: false,
     sunday: false,
   },
-  workMorningStart: "09:00",
-  workMorningEnd: "12:00",
-  workAfternoonStart: "13:00",
-  workAfternoonEnd: "18:00",
+  workMorningStart: buildDate(9),
+  workMorningEnd: buildDate(12),
+  workAfternoonStart: buildDate(13),
+  workAfternoonEnd: buildDate(18)
 };
 
 export default function SettingsReducer(state = INITIAL_STATE, action) {

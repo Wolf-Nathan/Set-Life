@@ -95,7 +95,7 @@ function TabNavigator() {
             options={{
                 tabBarLabel: 'Settings',
                 tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="settings" color={color} size={26} />
+                    <MaterialCommunityIcons name="cog" color={color} size={26} />
                 ),
             }}
         />

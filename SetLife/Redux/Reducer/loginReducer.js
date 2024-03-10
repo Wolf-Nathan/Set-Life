@@ -72,6 +72,10 @@ export default function connection(state = initialState, action) {
             };
             users.push(newUser);
             signUpSuccessAction = true;
+            if (action.props) {
+              // Use current props to redirect user to login screen.
+              action.props.navigation.navigate('Login');
+            }
           }
         }
       }

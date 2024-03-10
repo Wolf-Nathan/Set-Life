@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {Text, View, TouchableOpacity} from "react-native";
-import DatePicker from 'react-native-datepicker';
+import DatePicker from '@react-native-community/datetimepicker';
 import WeekdaySelector from './WeekdaySelector';
 import { connect } from 'react-redux';
 
@@ -116,7 +116,7 @@ class Settings extends React.Component {
                             <Text style={stylesSettings.text}>Week day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.wakeupWeek}
+                                value={this.props.settings.wakeupWeek}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -139,7 +139,7 @@ class Settings extends React.Component {
                             <Text style={stylesSettings.text}>Weekend day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.wakeupWeekend}
+                                value={this.props.settings.wakeupWeekend}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -167,7 +167,7 @@ class Settings extends React.Component {
                             <Text style={stylesSettings.text}>Week day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.bedtimeWeek}
+                                value={this.props.settings.bedtimeWeek}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -190,7 +190,7 @@ class Settings extends React.Component {
                             <Text style={stylesSettings.text}>Weekend day</Text>
                             <DatePicker 
                                 style={stylesSettings.inputTime}
-                                date={this.props.settings.bedtimeWeekend}
+                                value={this.props.settings.bedtimeWeekend}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 mode="time"
@@ -220,7 +220,7 @@ class Settings extends React.Component {
                             <View style={stylesSettings.rowContainerSub}>
                                 <DatePicker 
                                     style={stylesSettings.inputTime}
-                                    date={this.props.settings.workMorningStart}
+                                    value={this.props.settings.workMorningStart}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -240,7 +240,7 @@ class Settings extends React.Component {
                                     onDateChange={(workMorningStart) => {this.toggleWorkMorningStart(workMorningStart)}} />
                                     <DatePicker 
                                     style={stylesSettings.inputTime}
-                                    date={this.props.settings.workMorningEnd}
+                                    value={this.props.settings.workMorningEnd}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -265,7 +265,7 @@ class Settings extends React.Component {
                             <View style={stylesSettings.rowContainerSub}>
                                 <DatePicker 
                                     style={stylesSettings.inputTime}
-                                    date={this.props.settings.workAfternoonStart}
+                                    value={this.props.settings.workAfternoonStart}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -285,7 +285,7 @@ class Settings extends React.Component {
                                     onDateChange={(workAfternoonStart) => {this.toggleWorkAfternoonStart(workAfternoonStart)}} />
                                     <DatePicker 
                                     style={stylesSettings.inputTime}
-                                    date={this.props.settings.workAfternoonEnd}
+                                    value={this.props.settings.workAfternoonEnd}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     mode="time"
@@ -330,7 +330,7 @@ class Settings extends React.Component {
  * Function to get settings reducer.
  */
 const mapStateToProps = state => {
-    return { 
+    return {
         settings: state.settings,
         loginReducer: state.login
     }
