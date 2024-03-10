@@ -6,7 +6,7 @@ import logoGreen from '../assets/images/logo_green_500.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 
-import { stylesRegister } from '../assets/style/stylesheet';
+import {stylesRegister} from '../assets/style/stylesheet';
 
 /**
  * Component for user registration.
@@ -123,6 +123,13 @@ class Register extends React.Component {
     }
 
     /**
+     * Redirect user to Opening view.
+     */
+    returnOpening() {
+        this.props.navigation.navigate('Opening')
+    }
+
+    /**
      * Returns the view of the register form.
      * @returns {View}
      */
@@ -130,7 +137,9 @@ class Register extends React.Component {
         return(
             <View style={stylesRegister.viewContainer}>
                 <View style={stylesRegister.logoContainer}>
-                    <Image source={logoGreen} style={stylesRegister.logo} />
+                    <TouchableOpacity onPress={() => this.returnOpening()}>
+                        <Image source={logoGreen} style={stylesRegister.logo}/>
+                    </TouchableOpacity>
                     <Text style={stylesRegister.logoText}>Sign up</Text>
                 </View>
 

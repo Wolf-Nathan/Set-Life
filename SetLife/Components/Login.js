@@ -112,6 +112,13 @@ class Login extends React.Component {
     }
 
     /**
+     * Redirect user to Opening view.
+     */
+    returnOpening() {
+        this.props.navigation.navigate('Opening')
+    }
+
+    /**
      * Returns the view of the login form.
      * @returns {View}
      */
@@ -119,7 +126,9 @@ class Login extends React.Component {
         return(
             <View style={stylesLogin.viewContainer}>
                 <View style={stylesLogin.logoContainer}>
-                    <Image source={logoGreen} style={stylesLogin.logo} />
+                    <TouchableOpacity onPress={() => this.returnOpening()}>
+                        <Image source={logoGreen} style={stylesLogin.logo}/>
+                    </TouchableOpacity>
                     <Text style={stylesLogin.logoText}>Sign in</Text>
                 </View>
 
