@@ -57,12 +57,8 @@ class Register extends React.Component {
             password: this.state.password,
             confirmPassword: this.state.confirmPassword
         };
-        let action = {type: "SIGN_UP", value: newUser};
+        let action = {type: "SIGN_UP", value: newUser, props: this.props};
         this.props.dispatch(action);
-
-        if(this.props.loginReducer.signUpSuccess) {
-            this.props.navigation.navigate('Login');
-        }
     }
 
     /**
